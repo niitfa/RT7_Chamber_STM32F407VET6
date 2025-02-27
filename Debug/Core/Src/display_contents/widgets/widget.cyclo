@@ -1,0 +1,3 @@
+../Core/Src/display_contents/widgets/widget.c:10:6:widget_draw	1
+../Core/Src/display_contents/widgets/widget.c:14:6:widget_erase	1
+../Core/Src/display_contents/widgets/widget.c:18:6:widget_update	1

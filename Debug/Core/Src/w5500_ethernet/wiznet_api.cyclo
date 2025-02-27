@@ -1,0 +1,8 @@
+../Core/Src/w5500_ethernet/wiznet_api.c:12:6:W5500_Select	1
+../Core/Src/w5500_ethernet/wiznet_api.c:17:6:W5500_Deselect	1
+../Core/Src/w5500_ethernet/wiznet_api.c:22:6:W5500_ReadBuff	1
+../Core/Src/w5500_ethernet/wiznet_api.c:27:6:W5500_WriteBuff	1
+../Core/Src/w5500_ethernet/wiznet_api.c:32:9:W5500_ReadByte	1
+../Core/Src/w5500_ethernet/wiznet_api.c:39:6:W5500_WriteByte	1
+../Core/Src/w5500_ethernet/wiznet_api.c:44:6:W5500_SetAddress	1
+../Core/Src/w5500_ethernet/wiznet_api.c:48:6:W5500_Reboot	1

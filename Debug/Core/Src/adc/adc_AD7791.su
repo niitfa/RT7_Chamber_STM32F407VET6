@@ -1,0 +1,8 @@
+../Core/Src/adc/adc_AD7791.c:33:13:init	16	static
+../Core/Src/adc/adc_AD7791.c:49:13:update	56	dynamic
+../Core/Src/adc/adc_AD7791.c:70:17:get_cnt	16	static
+../Core/Src/adc/adc_AD7791.c:75:15:get_vout	24	static
+../Core/Src/adc/adc_AD7791.c:82:7:adc_AD7791_create	48	static
+../Core/Src/adc/adc_AD7791.c:113:13:spi_select	16	static
+../Core/Src/adc/adc_AD7791.c:121:13:spi_deselect	16	static
+../Core/Src/adc/adc_AD7791.c:130:13:spi_hw_command	16	static

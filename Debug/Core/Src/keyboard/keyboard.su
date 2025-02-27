@@ -1,0 +1,2 @@
+../Core/Src/keyboard/keyboard.c:11:6:keyboard_routine	16	static
+../Core/Src/keyboard/keyboard.c:21:6:keyboard_reset_cbs	16	static

@@ -1,0 +1,5 @@
+../Core/Src/adc/adc_emulator.c:21:13:init	16	static
+../Core/Src/adc/adc_emulator.c:25:13:update	24	static
+../Core/Src/adc/adc_emulator.c:41:17:get_cnt	16	static
+../Core/Src/adc/adc_emulator.c:46:15:get_vout	24	static
+../Core/Src/adc/adc_emulator.c:53:7:adc_emulator_create	40	static

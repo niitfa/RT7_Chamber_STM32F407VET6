@@ -1,0 +1,7 @@
+../Core/Src/adc/AD7791.c:18:6:AD7791_init	1
+../Core/Src/adc/AD7791.c:30:6:AD7791_setup	1
+../Core/Src/adc/AD7791.c:86:9:AD7791_get_dout_value	3
+../Core/Src/adc/AD7791.c:107:8:AD7791_get_voltage	1
+../Core/Src/adc/AD7791.c:114:13:spi_select	1
+../Core/Src/adc/AD7791.c:123:13:spi_deselect	1
+../Core/Src/adc/AD7791.c:132:13:spi_hw_command	2

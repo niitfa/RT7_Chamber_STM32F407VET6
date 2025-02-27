@@ -1,0 +1,2 @@
+../Core/Src/tcp_server/rx_message.c:18:6:rx_message_run_command	24	static
+../Core/Src/tcp_server/rx_message.c:65:5:rx_message_keep_alive	24	static

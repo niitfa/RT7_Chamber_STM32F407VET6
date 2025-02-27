@@ -1,0 +1,4 @@
+../Core/Src/adc/adc.c:11:6:adc_init	1
+../Core/Src/adc/adc.c:16:6:adc_update	1
+../Core/Src/adc/adc.c:21:10:adc_get_cnt	1
+../Core/Src/adc/adc.c:26:8:adc_get_vout	1

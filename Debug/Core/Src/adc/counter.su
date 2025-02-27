@@ -1,0 +1,8 @@
+../Core/Src/adc/counter.c:12:6:counter_init	24	static
+../Core/Src/adc/counter.c:19:6:counter_set_value	24	static
+../Core/Src/adc/counter.c:24:9:counter_get_value	16	static
+../Core/Src/adc/counter.c:29:6:counter_update	32	static
+../Core/Src/adc/counter.c:34:6:counter_set_step	16	static
+../Core/Src/adc/counter.c:39:6:counter_stop	16	static
+../Core/Src/adc/counter.c:44:6:counter_run_forward	16	static
+../Core/Src/adc/counter.c:49:6:counter_run_backward	16	static

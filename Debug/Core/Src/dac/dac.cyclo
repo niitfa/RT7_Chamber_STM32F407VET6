@@ -1,0 +1,3 @@
+../Core/Src/dac/dac.c:10:6:dac_init	1
+../Core/Src/dac/dac.c:15:6:dac_set_input_value	1
+../Core/Src/dac/dac.c:20:8:dac_get_reference_voltage	1

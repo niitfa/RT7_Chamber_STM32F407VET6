@@ -1,0 +1,4 @@
+../Core/Src/dac/dac_emulator.c:20:13:init	16	static
+../Core/Src/dac/dac_emulator.c:25:13:set_digital_value	16	static
+../Core/Src/dac/dac_emulator.c:29:15:get_reference_voltage	16	static
+../Core/Src/dac/dac_emulator.c:36:7:dac_emulator_create	32	static

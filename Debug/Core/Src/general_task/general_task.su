@@ -1,0 +1,6 @@
+../Core/Src/general_task/general_task.c:48:6:general_task_init	120	static
+../Core/Src/general_task/general_task.c:216:6:general_task_setup	16	static
+../Core/Src/general_task/general_task.c:228:6:general_task_loop	32	static
+../Core/Src/general_task/general_task.c:262:6:general_task_timer_interrupt	24	static
+../Core/Src/general_task/general_task.c:299:6:general_task_switch_screen	16	static
+../Core/Src/general_task/general_task.c:306:10:general_task_get_loop_period_ms	16	static

@@ -1,0 +1,11 @@
+../Core/Src/tcp_server/tx_message.c:20:5:tx_message_init	16	static
+../Core/Src/tcp_server/tx_message.c:27:5:tx_message_deinit	16	static
+../Core/Src/tcp_server/tx_message.c:32:6:tx_message_increase_id	24	static
+../Core/Src/tcp_server/tx_message.c:40:6:tx_message_set_adc_dr_uV	16	static
+../Core/Src/tcp_server/tx_message.c:45:6:tx_message_set_adc_dr_average_uV	16	static
+../Core/Src/tcp_server/tx_message.c:50:6:tx_message_set_hv_out_mV	16	static
+../Core/Src/tcp_server/tx_message.c:55:6:tx_message_set_press_out_Pa	16	static
+../Core/Src/tcp_server/tx_message.c:60:6:tx_message_set_adc_dr_measure_state	16	static
+../Core/Src/tcp_server/tx_message.c:65:6:tx_message_set_adc_dr_measure_time	16	static
+../Core/Src/tcp_server/tx_message.c:71:7:tx_message_get	16	static
+../Core/Src/tcp_server/tx_message.c:76:8:tx_message_size	4	static
