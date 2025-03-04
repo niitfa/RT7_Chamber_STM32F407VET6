@@ -19,7 +19,8 @@ adc_t adc_AD7791_create(
 		uint16_t pinCS,
 		double Vref,
 		uint8_t FR_word,
-		uint8_t MR_word
+		uint8_t MR_word,
+		uint32_t waitCycles
 		);
 
 #endif /* SRC_ADC_ADC_AD7791_H_ */

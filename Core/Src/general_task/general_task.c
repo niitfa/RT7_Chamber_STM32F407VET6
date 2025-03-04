@@ -47,7 +47,7 @@ extern TIM_HandleTypeDef* adctim;
 
 void general_task_init(general_task_t* self)
 {
-	HAL_Delay(500);
+	HAL_Delay(100);
 	memset(self, 0, sizeof(*self));
 
 	self->loopPeriod_ms = 50;
@@ -57,9 +57,12 @@ void general_task_init(general_task_t* self)
 	self->pressureCoeff = 1e+6; // Pa per volt
 
 	/* ADC */
+	uint32_t adcWaitCycles = 20;
 	uint8_t MR_word, BUF, UnB, BO, MD; // mode register options
 	uint8_t FR_word, FS, CDIV; // filter register options
-	double Vref = 0;
+	double Vref_dose = 0;
+	double Vref_hv = 0;
+	double Vref_press = 0;
 
 	/* ADC Dose Rate - bipolar */
 	// Filter register mode
@@ -83,9 +86,9 @@ void general_task_init(general_task_t* self)
 	MR_word += (BO << 3);
 	MR_word += (MD << 6);
 
-	Vref = 2.048;
+	Vref_dose = 2.5;
 
-	self->adcDoseRate = adc_AD7791_create(&hspi1, ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin, Vref, FR_word, MR_word);
+	self->adcDoseRate = adc_AD7791_create(&hspi3, ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin, Vref_dose, FR_word, MR_word, adcWaitCycles);
 	adc_init(&self->adcDoseRate);
 	HAL_Delay(5);
 
@@ -111,9 +114,9 @@ void general_task_init(general_task_t* self)
 	MR_word += (BO << 3);
 	MR_word += (MD << 6);
 
-	Vref = 2.048;
+	Vref_hv = 2.5;
 
-	self->adcHV = adc_AD7791_create(&hspi1, ADC_HV_SPI_CS_GPIO_Port, ADC_HV_SPI_CS_Pin, Vref, FR_word, MR_word);
+	self->adcHV = adc_AD7791_create(&hspi1, ADC_HV_SPI_CS_GPIO_Port, ADC_HV_SPI_CS_Pin, Vref_hv, FR_word, MR_word, adcWaitCycles + 10);
 	adc_init(&self->adcHV);
 	HAL_Delay(5);
 
@@ -139,9 +142,9 @@ void general_task_init(general_task_t* self)
 	MR_word += (BO << 3);
 	MR_word += (MD << 6);
 
-	Vref = 2.048;
+	Vref_press = 2.5;
 
-	self->adcPressure = adc_AD7791_create(&hspi1, ADC_PRESS_SPI_CS_GPIO_Port, ADC_PRESS_SPI_CS_Pin, Vref, FR_word, MR_word);
+	self->adcPressure = adc_AD7791_create(&hspi1, ADC_PRESS_SPI_CS_GPIO_Port, ADC_PRESS_SPI_CS_Pin, Vref_press, FR_word, MR_word, adcWaitCycles + 20);
 	adc_init(&self->adcPressure);
 	HAL_Delay(5);
 
@@ -156,7 +159,7 @@ void general_task_init(general_task_t* self)
 
 	/* DAC HV Input */
 	//self->dacInputHV = dac_emulator_create(); // emulator
-	self->dacInputHV = dac_MCP4811EP_create(&hspi3,
+	self->dacInputHV = dac_MCP4811EP_create(&hspi2,
 			DAC_SPI_CS_GPIO_Port, DAC_SPI_CS_Pin,
 			NULL, 0,
 			NULL, 0
@@ -170,10 +173,12 @@ void general_task_init(general_task_t* self)
 			&self->adcHV,
 			HV_INPUT_SELECT_GPIO_Port,
 			HV_INPUT_SELECT_Pin,
-			1,
-			0.002,
+			500. / 1024, // Vmax = 500, 922  = 1024 * 0.9 // 922
+ 			0.535 / 500, //1. / 233.645, // 43k/10M //0.002,
 			500
 			);
+
+	hv_set_output_voltage_adc_offset(&self->hv_system, Vref_hv / 2);
 
 	/* Select range pin */
 	set_adc_dose_range_select_pin(SENSOR_RANGE_SELECT_GPIO_Port, SENSOR_RANGE_SELECT_Pin);
@@ -226,7 +231,7 @@ void general_task_setup(general_task_t* self)
 	general_task_switch_screen(self, screen_1_instance());
 	tcp_input_stream_enable_handler(&self->tcpInput);
 	/* HV ADC Start Calibration (offset measurement) */
-	adc_monitor_start_measurement(&self->adcHVMonitor, self->freqIT * 2 / 3);
+	//adc_monitor_start_measurement(&self->adcHVMonitor, self->freqIT * 2 / 3);
 }
 
 void general_task_loop(general_task_t* self)
@@ -237,9 +242,6 @@ void general_task_loop(general_task_t* self)
 		self->cycleCounter = self->cycleCounterMax;
 
 		// Output message
-
-		//tx_message_increase_id(&self->txMessage);
-
 		HAL_NVIC_DisableIRQ(USR_ADC_TIM_IRQn);
 		tx_message_set_adc_dr_uV(&self->txMessage, (int32_t)(adc_get_vout(&self->adcDoseRate) * 1e+6));
 		tx_message_set_adc_dr_average_uV(&self->txMessage, (int32_t)(adc_monitor_get_average_signal_value(&self->adcDRMonitor) * 1e+6));
@@ -257,6 +259,9 @@ void general_task_loop(general_task_t* self)
 
 		// Update screen
 		screen_update(self->currentScreen);
+
+		// debug!!!
+		//general_task_timer_interrupt(self);
 	}
 
 	self->cycleCounter--;
@@ -265,11 +270,10 @@ void general_task_loop(general_task_t* self)
 
 void general_task_timer_interrupt(general_task_t* self)
 {
-	tx_message_increase_id(&self->txMessage);
-
 	switch(self->adcNoCnt)
 	{
 	case 0:
+		tx_message_increase_id(&self->txMessage);
 		/* Dose ADC*/
 		adc_update(&self->adcDoseRate, NULL);
 		adc_monitor_update(&self->adcDRMonitor);
@@ -279,15 +283,6 @@ void general_task_timer_interrupt(general_task_t* self)
 		/* HV ADC*/
 		adc_update(&self->adcHV, NULL);
 		adc_monitor_update(&self->adcHVMonitor);
-
-		/* Reset HV calibration (offset measurement)  */
-		if(adc_monitor_get_measurement_state(&self->adcHVMonitor) == ADC_COMPLETED)
-		{
-			hv_set_output_voltage_adc_offset(&self->hv_system,
-					adc_monitor_get_average_signal_value(&self->adcHVMonitor));
-			adc_monitor_reset_measurement(&self->adcHVMonitor);
-		}
-
 		self->adcNoCnt++;
 		break;
 	case 2:

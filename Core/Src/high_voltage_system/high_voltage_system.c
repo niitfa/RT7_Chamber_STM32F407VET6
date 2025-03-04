@@ -4,10 +4,6 @@
  *  Created on: Dec 16, 2024
  *      Author: Kirill
  */
-
-#ifndef SRC_HV_SOURCE_HV_SOURCE_C_
-#define SRC_HV_SOURCE_HV_SOURCE_C_
-
 #include "high_voltage_system.h"
 #include <string.h>
 #include <math.h>
@@ -63,5 +59,3 @@ void hv_set_output_voltage_adc_offset(high_voltage_system_t* self, double offset
 {
 	self->VoutOffsetADC_V = offset_V;
 }
-
-#endif /* SRC_HV_SOURCE_HV_SOURCE_C_ */
