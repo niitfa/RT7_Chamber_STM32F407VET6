@@ -44,11 +44,17 @@ Core/Src/general_task/general_task.o: \
  ../Core/Src/dac/dac.h ../Core/Src/adc/adc_monitor.h \
  ../Core/Src/adc/adc.h ../Core/Src/adc/counter.h \
  ../Core/Src/high_voltage_system/high_voltage_system.h \
+ ../FATFS/App/user_sd.h ../FATFS/App/fatfs_sd.h \
+ ../Middlewares/Third_Party/FatFs/src/diskio.h \
+ ../Middlewares/Third_Party/FatFs/src/integer.h ../FATFS/App/fatfs.h \
+ ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/ffconf.h \
+ ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
+ ../Middlewares/Third_Party/FatFs/src/diskio.h \
+ ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/user_diskio.h \
  ../Core/Src/display_contents/screens/screen_1.h \
  ../Core/Src/display_contents/screens/screen.h \
- ../Core/Src/adc/adc_emulator.h ../Core/Src/adc/adc_AD7791.h \
- ../Core/Src/dac/dac_emulator.h ../Core/Src/dac/dac.h \
- ../Core/Src/dac/dac_MCP4811_EP.h ../Core/Src/adc/range_select.h \
+ ../Core/Src/adc/adc_AD7791.h ../Core/Src/dac/dac_MCP4811_EP.h \
+ ../Core/Src/dac/dac.h ../Core/Src/adc/range_select.h \
  ../Core/Src/ssd1306/ssd1306.h ../Core/Src/ssd1306/ssd1306_conf.h \
  ../Core/Src/ssd1306/ssd1306_fonts.h ../Core/Src/ssd1306/ssd1306.h
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -100,13 +106,22 @@ Core/Src/general_task/general_task.o: \
 ../Core/Src/adc/adc.h:
 ../Core/Src/adc/counter.h:
 ../Core/Src/high_voltage_system/high_voltage_system.h:
+../FATFS/App/user_sd.h:
+../FATFS/App/fatfs_sd.h:
+../Middlewares/Third_Party/FatFs/src/diskio.h:
+../Middlewares/Third_Party/FatFs/src/integer.h:
+../FATFS/App/fatfs.h:
+../Middlewares/Third_Party/FatFs/src/ff.h:
+../FATFS/Target/ffconf.h:
+../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h:
+../Middlewares/Third_Party/FatFs/src/diskio.h:
+../Middlewares/Third_Party/FatFs/src/ff.h:
+../FATFS/Target/user_diskio.h:
 ../Core/Src/display_contents/screens/screen_1.h:
 ../Core/Src/display_contents/screens/screen.h:
-../Core/Src/adc/adc_emulator.h:
 ../Core/Src/adc/adc_AD7791.h:
-../Core/Src/dac/dac_emulator.h:
-../Core/Src/dac/dac.h:
 ../Core/Src/dac/dac_MCP4811_EP.h:
+../Core/Src/dac/dac.h:
 ../Core/Src/adc/range_select.h:
 ../Core/Src/ssd1306/ssd1306.h:
 ../Core/Src/ssd1306/ssd1306_conf.h:

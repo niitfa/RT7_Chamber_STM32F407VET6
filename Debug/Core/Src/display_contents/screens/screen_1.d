@@ -47,7 +47,14 @@ Core/Src/display_contents/screens/screen_1.o: \
  ../Core/Src/tcp_server/tx_message.h ../Core/Src/adc/adc.h \
  ../Core/Src/dac/dac.h ../Core/Src/adc/adc_monitor.h \
  ../Core/Src/adc/adc.h ../Core/Src/adc/counter.h \
- ../Core/Src/high_voltage_system/high_voltage_system.h
+ ../Core/Src/high_voltage_system/high_voltage_system.h \
+ ../FATFS/App/user_sd.h ../FATFS/App/fatfs_sd.h \
+ ../Middlewares/Third_Party/FatFs/src/diskio.h \
+ ../Middlewares/Third_Party/FatFs/src/integer.h ../FATFS/App/fatfs.h \
+ ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/ffconf.h \
+ ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
+ ../Middlewares/Third_Party/FatFs/src/diskio.h \
+ ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/user_diskio.h
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h:
 ../Drivers/CMSIS/Include/core_cm4.h:
@@ -103,3 +110,14 @@ Core/Src/display_contents/screens/screen_1.o: \
 ../Core/Src/adc/adc.h:
 ../Core/Src/adc/counter.h:
 ../Core/Src/high_voltage_system/high_voltage_system.h:
+../FATFS/App/user_sd.h:
+../FATFS/App/fatfs_sd.h:
+../Middlewares/Third_Party/FatFs/src/diskio.h:
+../Middlewares/Third_Party/FatFs/src/integer.h:
+../FATFS/App/fatfs.h:
+../Middlewares/Third_Party/FatFs/src/ff.h:
+../FATFS/Target/ffconf.h:
+../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h:
+../Middlewares/Third_Party/FatFs/src/diskio.h:
+../Middlewares/Third_Party/FatFs/src/ff.h:
+../FATFS/Target/user_diskio.h:

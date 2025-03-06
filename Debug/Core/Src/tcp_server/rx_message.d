@@ -44,6 +44,13 @@ Core/Src/tcp_server/rx_message.o: ../Core/Src/tcp_server/rx_message.c \
  ../Core/Src/dac/dac.h ../Core/Src/adc/adc_monitor.h \
  ../Core/Src/adc/adc.h ../Core/Src/adc/counter.h \
  ../Core/Src/high_voltage_system/high_voltage_system.h \
+ ../FATFS/App/user_sd.h ../FATFS/App/fatfs_sd.h \
+ ../Middlewares/Third_Party/FatFs/src/diskio.h \
+ ../Middlewares/Third_Party/FatFs/src/integer.h ../FATFS/App/fatfs.h \
+ ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/ffconf.h \
+ ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
+ ../Middlewares/Third_Party/FatFs/src/diskio.h \
+ ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/user_diskio.h \
  ../Core/Src/display_contents/screens/screen_1.h \
  ../Core/Src/display_contents/screens/screen.h \
  ../Core/Src/adc/range_select.h
@@ -97,6 +104,17 @@ Core/Src/tcp_server/rx_message.o: ../Core/Src/tcp_server/rx_message.c \
 ../Core/Src/adc/adc.h:
 ../Core/Src/adc/counter.h:
 ../Core/Src/high_voltage_system/high_voltage_system.h:
+../FATFS/App/user_sd.h:
+../FATFS/App/fatfs_sd.h:
+../Middlewares/Third_Party/FatFs/src/diskio.h:
+../Middlewares/Third_Party/FatFs/src/integer.h:
+../FATFS/App/fatfs.h:
+../Middlewares/Third_Party/FatFs/src/ff.h:
+../FATFS/Target/ffconf.h:
+../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h:
+../Middlewares/Third_Party/FatFs/src/diskio.h:
+../Middlewares/Third_Party/FatFs/src/ff.h:
+../FATFS/Target/user_diskio.h:
 ../Core/Src/display_contents/screens/screen_1.h:
 ../Core/Src/display_contents/screens/screen.h:
 ../Core/Src/adc/range_select.h:

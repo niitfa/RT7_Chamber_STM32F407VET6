@@ -105,8 +105,18 @@ static void update_(screen_t* self)
 	ssd1306_Fill(Black);
 
 	// HEAD
+	//ssd1306_SetCursor(HEAD_X, HEAD_Y);
+	//ssd1306_WriteInt(self->data->counter++,*TEXT_FONT, White);//("________________", *TEXT_FONT, White);
+
+	/* file */
 	ssd1306_SetCursor(HEAD_X, HEAD_Y);
-	ssd1306_WriteInt(self->data->counter++,*TEXT_FONT, White);//("________________", *TEXT_FONT, White);
+	ssd1306_WriteInt(task.sd_mount,*TEXT_FONT, White);
+	ssd1306_SetCursor(HEAD_X + 15, HEAD_Y);
+	ssd1306_WriteInt(task.sd_open,*TEXT_FONT, White);
+	ssd1306_SetCursor(HEAD_X + 30, HEAD_Y);
+	ssd1306_WriteInt(task.sd_puts,*TEXT_FONT, White);
+	ssd1306_SetCursor(HEAD_X + 45, HEAD_Y);
+	ssd1306_WriteInt(task.sd_close,*TEXT_FONT, White);
 
 	// DR
 	ssd1306_SetCursor(DR_DESC_X, DR_DESC_Y);

@@ -19,6 +19,7 @@
 #include "adc_monitor.h"
 #include "counter.h"
 #include "high_voltage_system.h"
+#include "user_sd.h"
 
 typedef struct
 {
@@ -54,6 +55,10 @@ typedef struct
 	/* ADC emulation counters */
 	counter_t cntDoseRate;
 	counter_t cntHV;
+
+	/* SD */
+	user_sd_t sd;
+	int sd_mount, sd_open, sd_puts, sd_close;
 
 	int cycleCounter, cycleCounterMax;
 } general_task_t;

@@ -9,17 +9,10 @@
 #include "main.h"
 #include "general_task.h"
 #include <string.h>
-
 #include "screen_1.h"
-
-#include "adc_emulator.h"
 #include "adc_AD7791.h"
-
-#include "dac_emulator.h"
 #include "dac_MCP4811_EP.h"
-
 #include "range_select.h"
-
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
 
@@ -36,7 +29,7 @@
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi2;
 extern SPI_HandleTypeDef hspi3;
-extern I2C_HandleTypeDef hi2c3;
+//extern I2C_HandleTypeDef hi2c3;
 
 //extern TIM_HandleTypeDef htim6;
 extern TIM_HandleTypeDef* adctim;
@@ -186,6 +179,14 @@ void general_task_init(general_task_t* self)
 
 
 	/* SD Card*/
+	FR_OK;
+	user_sd_init(&self->sd, &hspi2, SD_CS_GPIO_Port, SD_CS_Pin);
+	self->sd_mount = user_sd_mount(&self->sd, 1);
+	self->sd_open = user_sd_fopen(&self->sd, "file.txt", FA_CREATE_ALWAYS | FA_READ | FA_WRITE);
+	self->sd_puts = user_sd_fputs(&self->sd, "govno");
+	self->sd_close = user_sd_fclose(&self->sd);
+
+
 
 	HAL_Delay(5);
 	/* Ethernet */

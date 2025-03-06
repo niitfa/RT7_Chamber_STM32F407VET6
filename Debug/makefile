@@ -9,6 +9,10 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Middlewares/Third_Party/FatFs/src/option/subdir.mk
+-include Middlewares/Third_Party/FatFs/src/subdir.mk
+-include FATFS/Target/subdir.mk
+-include FATFS/App/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/w5500_ethernet/subdir.mk
@@ -70,8 +74,8 @@ all: main-build
 main-build: RT7_Chamber.elf secondary-outputs
 
 # Tool invocations
-RT7_Chamber.elf RT7_Chamber.map: $(OBJS) $(USER_OBJS) C:\Users\Kirill\Documents\Github\RT7_Chamber_STM32F407VET6\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "RT7_Chamber.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Kirill\Documents\Github\RT7_Chamber_STM32F407VET6\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="RT7_Chamber.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+RT7_Chamber.elf RT7_Chamber.map: $(OBJS) $(USER_OBJS) C:\Users\Kirill\Documents\GitHub\RT7_Chamber_STM32F407VET6\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "RT7_Chamber.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Kirill\Documents\GitHub\RT7_Chamber_STM32F407VET6\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="RT7_Chamber.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
