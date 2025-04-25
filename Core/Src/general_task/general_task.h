@@ -19,7 +19,9 @@
 #include "adc_monitor.h"
 #include "counter.h"
 #include "high_voltage_system.h"
-#include "user_sd.h"
+#include "pressure_sensor.h"
+
+#define UART_BUFF_SIZE 9
 
 typedef struct
 {
@@ -41,11 +43,13 @@ typedef struct
 	adc_t adcHV;
 	adc_t adcPressure;
 
-	float pressureCoeff;
-
 	adc_monitor_t adcDRMonitor;
 	adc_monitor_t adcHVMonitor;
 	adc_monitor_t adcPRMonitor;
+
+	/* Pressure sensor */
+	pressure_sensor_t pressureSensor;
+
 	/* DAC */
 	dac_t dacInputHV;
 
@@ -56,17 +60,20 @@ typedef struct
 	counter_t cntDoseRate;
 	counter_t cntHV;
 
-	/* SD */
-	user_sd_t sd;
-	int sd_mount, sd_open, sd_puts, sd_close;
-
 	int cycleCounter, cycleCounterMax;
+
+	/* UART */
+	uint8_t uart_buff[UART_BUFF_SIZE];
+
+	uint8_t ip[4];
+	uint16_t inputPort, outputPort;
 } general_task_t;
 
 void general_task_init(general_task_t* self);
 void general_task_setup(general_task_t* self);
 void general_task_loop(general_task_t* self);
 void general_task_timer_interrupt(general_task_t* self);
+void general_task_uart_recv_callback(general_task_t* self);
 
 // other
 void general_task_switch_screen(general_task_t* self, screen_t* screen);

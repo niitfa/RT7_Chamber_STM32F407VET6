@@ -26,17 +26,16 @@ Core/Src/adc \
 Core/Src/dac \
 Core/Src/display_contents/screens \
 Core/Src/display_contents/widgets \
+Core/Src/flash_manager \
 Core/Src/general_task \
 Core/Src/high_voltage_system \
 Core/Src/keyboard \
 Core/Src \
+Core/Src/pressure_sensor \
 Core/Src/ssd1306 \
 Core/Src/tcp_server \
+Core/Src/uart_rx_handler \
 Core/Src/w5500_ethernet \
 Core/Startup \
 Drivers/STM32F4xx_HAL_Driver/Src \
-FATFS/App \
-FATFS/Target \
-Middlewares/Third_Party/FatFs/src \
-Middlewares/Third_Party/FatFs/src/option \
 

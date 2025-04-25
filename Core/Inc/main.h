@@ -67,14 +67,14 @@ void Error_Handler(void);
 #define ADC_DOSE_SPI_CS_GPIO_Port GPIOA
 #define ADC_HV_SPI_CS_Pin GPIO_PIN_3
 #define ADC_HV_SPI_CS_GPIO_Port GPIOA
-#define SD_CS_Pin GPIO_PIN_13
-#define SD_CS_GPIO_Port GPIOE
 #define ETH_SPI_CS_Pin GPIO_PIN_10
 #define ETH_SPI_CS_GPIO_Port GPIOB
 #define ETH_RESET_Pin GPIO_PIN_11
 #define ETH_RESET_GPIO_Port GPIOB
-#define SD_SPI_CS_Pin GPIO_PIN_12
-#define SD_SPI_CS_GPIO_Port GPIOB
+#define ADC_DOSE_xPWDN_Pin GPIO_PIN_7
+#define ADC_DOSE_xPWDN_GPIO_Port GPIOC
+#define ADC_DOSE_START_Pin GPIO_PIN_8
+#define ADC_DOSE_START_GPIO_Port GPIOC
 #define DAC_SPI_CS_Pin GPIO_PIN_1
 #define DAC_SPI_CS_GPIO_Port GPIOD
 

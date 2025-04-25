@@ -105,18 +105,8 @@ static void update_(screen_t* self)
 	ssd1306_Fill(Black);
 
 	// HEAD
-	//ssd1306_SetCursor(HEAD_X, HEAD_Y);
-	//ssd1306_WriteInt(self->data->counter++,*TEXT_FONT, White);//("________________", *TEXT_FONT, White);
-
-	/* file */
 	ssd1306_SetCursor(HEAD_X, HEAD_Y);
-	ssd1306_WriteInt(task.sd_mount,*TEXT_FONT, White);
-	ssd1306_SetCursor(HEAD_X + 15, HEAD_Y);
-	ssd1306_WriteInt(task.sd_open,*TEXT_FONT, White);
-	ssd1306_SetCursor(HEAD_X + 30, HEAD_Y);
-	ssd1306_WriteInt(task.sd_puts,*TEXT_FONT, White);
-	ssd1306_SetCursor(HEAD_X + 45, HEAD_Y);
-	ssd1306_WriteInt(task.sd_close,*TEXT_FONT, White);
+	ssd1306_WriteInt(self->data->counter++,*TEXT_FONT, White);//("________________", *TEXT_FONT, White);
 
 	// DR
 	ssd1306_SetCursor(DR_DESC_X, DR_DESC_Y);
@@ -140,10 +130,10 @@ static void update_(screen_t* self)
 	ssd1306_SetCursor(PRESS_DESC_X, PRESS_DESC_Y);
 	ssd1306_WriteString("PR:", *TEXT_FONT, White);
 	ssd1306_SetCursor(PRESS_VAL_X, PRESS_VAL_Y);
-	//ssd1306_WriteInt(adc_get_vout(&task.adcPressure) * task.pressureCoeff, *TEXT_FONT, White);
-	ssd1306_WriteInt(adc_get_cnt(&task.adcPressure), *TEXT_FONT, White);
+	ssd1306_WriteInt(pressure_sensor_get_Pa(&task.pressureSensor) / 1000, *TEXT_FONT, White);
+	//ssd1306_WriteInt(adc_get_vout(&task.adcPressure), *TEXT_FONT, White);
 	ssd1306_SetCursor(PRESS_UNIT_X, PRESS_UNIT_Y);
-	ssd1306_WriteString("Pa", *TEXT_FONT, White);
+	ssd1306_WriteString("kPa", *TEXT_FONT, White);
 
 	ssd1306_UpdateScreen();
 

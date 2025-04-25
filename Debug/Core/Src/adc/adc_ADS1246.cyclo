@@ -1,0 +1,9 @@
+../Core/Src/adc/adc_ADS1246.c:72:13:init	1
+../Core/Src/adc/adc_ADS1246.c:77:13:update	10
+../Core/Src/adc/adc_ADS1246.c:135:17:get_cnt	1
+../Core/Src/adc/adc_ADS1246.c:140:15:get_vout	1
+../Core/Src/adc/adc_ADS1246.c:147:7:adc_ADS1246_create	2
+../Core/Src/adc/adc_ADS1246.c:193:13:spi_select	1
+../Core/Src/adc/adc_ADS1246.c:201:13:spi_deselect	1
+../Core/Src/adc/adc_ADS1246.c:210:13:spi_hw_command	2
+../Core/Src/adc/adc_ADS1246.c:217:13:check_negative_24_to_32	2

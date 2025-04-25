@@ -1,0 +1,2 @@
+../Core/Src/pressure_sensor/pressure_sensor.c:11:5:pressure_sensor_init	1
+../Core/Src/pressure_sensor/pressure_sensor.c:20:7:pressure_sensor_get_Pa	1

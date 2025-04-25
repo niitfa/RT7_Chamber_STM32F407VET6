@@ -31,6 +31,7 @@ Core/Src/tcp_server/rx_message.o: ../Core/Src/tcp_server/rx_message.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Src/keyboard/button.h \
  ../Core/Src/display_contents/screens/screen.h \
  ../Core/Src/tcp_server/tcp_output_stream.h \
@@ -44,13 +45,7 @@ Core/Src/tcp_server/rx_message.o: ../Core/Src/tcp_server/rx_message.c \
  ../Core/Src/dac/dac.h ../Core/Src/adc/adc_monitor.h \
  ../Core/Src/adc/adc.h ../Core/Src/adc/counter.h \
  ../Core/Src/high_voltage_system/high_voltage_system.h \
- ../FATFS/App/user_sd.h ../FATFS/App/fatfs_sd.h \
- ../Middlewares/Third_Party/FatFs/src/diskio.h \
- ../Middlewares/Third_Party/FatFs/src/integer.h ../FATFS/App/fatfs.h \
- ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/ffconf.h \
- ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
- ../Middlewares/Third_Party/FatFs/src/diskio.h \
- ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/user_diskio.h \
+ ../Core/Src/pressure_sensor/pressure_sensor.h \
  ../Core/Src/display_contents/screens/screen_1.h \
  ../Core/Src/display_contents/screens/screen.h \
  ../Core/Src/adc/range_select.h
@@ -87,6 +82,7 @@ Core/Src/tcp_server/rx_message.o: ../Core/Src/tcp_server/rx_message.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Src/keyboard/button.h:
 ../Core/Src/display_contents/screens/screen.h:
 ../Core/Src/tcp_server/tcp_output_stream.h:
@@ -104,17 +100,7 @@ Core/Src/tcp_server/rx_message.o: ../Core/Src/tcp_server/rx_message.c \
 ../Core/Src/adc/adc.h:
 ../Core/Src/adc/counter.h:
 ../Core/Src/high_voltage_system/high_voltage_system.h:
-../FATFS/App/user_sd.h:
-../FATFS/App/fatfs_sd.h:
-../Middlewares/Third_Party/FatFs/src/diskio.h:
-../Middlewares/Third_Party/FatFs/src/integer.h:
-../FATFS/App/fatfs.h:
-../Middlewares/Third_Party/FatFs/src/ff.h:
-../FATFS/Target/ffconf.h:
-../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h:
-../Middlewares/Third_Party/FatFs/src/diskio.h:
-../Middlewares/Third_Party/FatFs/src/ff.h:
-../FATFS/Target/user_diskio.h:
+../Core/Src/pressure_sensor/pressure_sensor.h:
 ../Core/Src/display_contents/screens/screen_1.h:
 ../Core/Src/display_contents/screens/screen.h:
 ../Core/Src/adc/range_select.h:

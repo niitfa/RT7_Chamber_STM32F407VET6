@@ -18,7 +18,7 @@ typedef enum
 	AD7791_MEASURE
 } AD7791_state_t;
 
-#define SPI_TIMEOUT 10
+#define ADC_AD7791_SPI_TIMEOUT 10
 
 static void spi_select(adc_t* self);
 static void spi_deselect(adc_t* self);
@@ -47,6 +47,7 @@ struct adc_data_t
 
 static void init(adc_t* self)
 {
+	delay_us(1);
 }
 
 static void update(adc_t* self, void* option)
@@ -112,7 +113,7 @@ static void update(adc_t* self, void* option)
 		int i;
 		for(i = 0; i < kDataSizeBytes; ++i)
 		{
-			HAL_SPI_Receive(self->data->hspi, rxBytes + kDataSizeBytes - i - 1, 1, SPI_TIMEOUT);
+			HAL_SPI_Receive(self->data->hspi, rxBytes + kDataSizeBytes - i - 1, 1, ADC_AD7791_SPI_TIMEOUT);
 			while(HAL_SPI_GetState(self->data->hspi) != HAL_SPI_STATE_READY)
 				;
 		}
@@ -192,7 +193,7 @@ static void spi_deselect(adc_t* self)
 
 static void spi_hw_command(adc_t *self, uint8_t cmd)
 {
-	HAL_SPI_Transmit(self->data->hspi, &cmd, 1, SPI_TIMEOUT);
+	HAL_SPI_Transmit(self->data->hspi, &cmd, 1, ADC_AD7791_SPI_TIMEOUT);
 	while(HAL_SPI_GetState(self->data->hspi) != HAL_SPI_STATE_READY)
 		;
 }

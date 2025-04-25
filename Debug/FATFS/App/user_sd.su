@@ -1,7 +1,0 @@
-../FATFS/App/user_sd.c:14:5:user_sd_init	24	static
-../FATFS/App/user_sd.c:26:5:user_sd_mount	16	static
-../FATFS/App/user_sd.c:31:5:user_sd_getfree	16	static
-../FATFS/App/user_sd.c:39:5:user_sd_fopen	24	static
-../FATFS/App/user_sd.c:44:5:user_sd_fputs	16	static
-../FATFS/App/user_sd.c:49:7:user_sd_fgets	24	static
-../FATFS/App/user_sd.c:54:5:user_sd_fclose	16	static

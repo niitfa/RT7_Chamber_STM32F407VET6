@@ -30,6 +30,7 @@ Core/Src/tcp_server/tcp_output_stream.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Src/tcp_server/tcp_output_stream.h \
  ../Core/Src/w5500_ethernet/socket.h \
  ../Core/Src/w5500_ethernet/wizchip_conf.h \
@@ -66,6 +67,7 @@ Core/Src/tcp_server/tcp_output_stream.o: \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Src/tcp_server/tcp_output_stream.h:
 ../Core/Src/w5500_ethernet/socket.h:
 ../Core/Src/w5500_ethernet/wizchip_conf.h:

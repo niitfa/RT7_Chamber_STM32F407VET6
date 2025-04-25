@@ -9,10 +9,19 @@
 #include "main.h"
 #include "general_task.h"
 #include <string.h>
+#include "uart_rx_handler.h"
+#include "flash_data.h"
+
 #include "screen_1.h"
+
+#include "adc_emulator.h"
 #include "adc_AD7791.h"
+
+#include "dac_emulator.h"
 #include "dac_MCP4811_EP.h"
+
 #include "range_select.h"
+
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
 
@@ -29,7 +38,8 @@
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi2;
 extern SPI_HandleTypeDef hspi3;
-//extern I2C_HandleTypeDef hi2c3;
+extern I2C_HandleTypeDef hi2c3;
+extern UART_HandleTypeDef* conf_uart;
 
 //extern TIM_HandleTypeDef htim6;
 extern TIM_HandleTypeDef* adctim;
@@ -46,8 +56,6 @@ void general_task_init(general_task_t* self)
 	self->loopPeriod_ms = 50;
 	self->freqIT = TIMER_FREQUENCY / (adctim->Init.Period + 1) / (adctim->Init.Prescaler + 1);
 	self->adcNoCnt = 0;
-
-	self->pressureCoeff = 1e+6; // Pa per volt
 
 	/* ADC */
 	uint32_t adcWaitCycles = 20;
@@ -150,6 +158,12 @@ void general_task_init(general_task_t* self)
 	/* ADC Pressure monitor */
 	adc_monitor_init(&self->adcPRMonitor, &self->adcPressure, USR_ADC_TIM_IRQn);
 
+	/* Pressure sensor */
+	float pressureOffsetPa = -1e+5;
+	float PaPerV = 20 * 1e+5 / 2.5;
+
+	pressure_sensor_init(&self->pressureSensor, pressureOffsetPa, PaPerV, &self->adcPressure);
+
 	/* DAC HV Input */
 	//self->dacInputHV = dac_emulator_create(); // emulator
 	self->dacInputHV = dac_MCP4811EP_create(&hspi2,
@@ -178,26 +192,52 @@ void general_task_init(general_task_t* self)
 	select_broad_adc_dose_range();
 
 
-	/* SD Card*/
-	FR_OK;
-	user_sd_init(&self->sd, &hspi2, SD_CS_GPIO_Port, SD_CS_Pin);
-	self->sd_mount = user_sd_mount(&self->sd, 1);
-	self->sd_open = user_sd_fopen(&self->sd, "file.txt", FA_CREATE_ALWAYS | FA_READ | FA_WRITE);
-	self->sd_puts = user_sd_fputs(&self->sd, "govno");
-	self->sd_close = user_sd_fclose(&self->sd);
-
-
-
 	HAL_Delay(5);
 	/* Ethernet */
+	// default values
+	uint8_t defIP[4] = {169, 254, 206, 12};
+	uint16_t defInputPort = 22252;
+	uint16_t defOutputPort = 22251;
+
+
+	// actual values
+	memcpy(self->ip, defIP, 4);
+	self->inputPort = defInputPort;
+	self->outputPort = defOutputPort;
+
+	// reading from flash
+	flash_data_t fdata = flash_data_read();
+	if(fdata.input_port != 0xFFFF)
+	{
+		self->inputPort = fdata.input_port;
+	}
+	if(fdata.output_port != 0xFFFF)
+	{
+		self->outputPort = fdata.output_port;
+	}
+	if(*(uint32_t*)fdata.ip != 0xFFFFFFFF)
+	{
+		memcpy(self->ip, fdata.ip, 4);
+	}
+
+
 	wiz_NetInfo gWIZNETINFO = {
-			.mac 	= {0xed, 0xa2, 0xb3, 0xff, 0xfe, 0xfd},
-			.ip 	= {169, 254, 206, 240}, // 169.254.206.240
+			.mac 	= {0xed, 0xa2, 0xb3, 0xff, 0xfe, 0xa9},
+			.ip 	= {self->ip[0], self->ip[1], self->ip[2], self->ip[3]}, // 169.254.206.240
 			.sn 	= {255, 255, 255, 0},
-			.gw		= {169, 254, 206, 240},
+			.gw		= {self->ip[0], self->ip[1], self->ip[2], self->ip[3]}, // {169, 254, 206, 1},
 			.dns 	= {0, 0, 0, 0},
 			.dhcp 	= NETINFO_STATIC
 	};
+
+	/*wiz_NetInfo gWIZNETINFO = {
+			.mac 	= {0xed, 0xa2, 0xb3, 0xff, 0xfe, 0xa9},
+			.ip 	= {169, 254, 206, 240}, // 169.254.206.240
+			.sn 	= {255, 255, 255, 0},
+			.gw		= {169, 254, 206, 240}, // {169, 254, 206, 1},
+			.dns 	= {0, 0, 0, 0},
+			.dhcp 	= NETINFO_STATIC
+	}; */
 
 	W5500_SetAddress(gWIZNETINFO);
 	W5500_Reboot();
@@ -205,7 +245,8 @@ void general_task_init(general_task_t* self)
 	/* TCP server sockets */
 	tcp_output_stream_init_data_t tcpOutputInit;
 	tcpOutputInit.sn = 0;
-	tcpOutputInit.port = 11151;
+	tcpOutputInit.port = self->outputPort;
+	//tcpOutputInit.port = 11151;
 	tcpOutputInit.flag = SF_IO_NONBLOCK;
 	tcpOutputInit.hinput = &self->tcpInput;
 	tcpOutputInit.closeSocketCounterMax = 50;
@@ -214,7 +255,8 @@ void general_task_init(general_task_t* self)
 
 	tcp_input_stream_init_data_t tcpInputInit;
 	tcpInputInit.sn = 1;
-	tcpInputInit.port = 11152;
+	tcpInputInit.port = self->inputPort;
+	//tcpOutputInit.port = 11152;
 	tcpInputInit.flag = SF_IO_NONBLOCK;
 	tcpInputInit.w5500RebootCounterMax = 50;
 	tcp_input_stream_init(&self->tcpInput, tcpInputInit);
@@ -233,6 +275,43 @@ void general_task_setup(general_task_t* self)
 	tcp_input_stream_enable_handler(&self->tcpInput);
 	/* HV ADC Start Calibration (offset measurement) */
 	//adc_monitor_start_measurement(&self->adcHVMonitor, self->freqIT * 2 / 3);
+
+	ssd1306_Init();
+	ssd1306_Fill(Black);
+	ssd1306_SetCursor(3, 3);
+	ssd1306_WriteString("Loading...", Font_7x10, White);
+	ssd1306_UpdateScreen();
+
+	// ip display
+	ssd1306_Fill(Black);
+
+	ssd1306_SetCursor(3, 20);
+	ssd1306_WriteString("ip:", Font_7x10, White);
+
+	ssd1306_SetCursor(25, 20);
+	ssd1306_WriteInt(self->ip[0], Font_7x10, White);
+	ssd1306_SetCursor(25 + 25*1, 20);
+	ssd1306_WriteInt(self->ip[1], Font_7x10, White);
+	ssd1306_SetCursor(25 + 25*2, 20);
+	ssd1306_WriteInt(self->ip[2], Font_7x10, White);
+	ssd1306_SetCursor(25 + 25*3, 20);
+	ssd1306_WriteInt(self->ip[3], Font_7x10, White);
+
+	ssd1306_SetCursor(3 , 35);
+	ssd1306_WriteString("out port:", Font_7x10, White);
+	ssd1306_SetCursor(70 , 35);
+	ssd1306_WriteInt(self->outputPort, Font_7x10, White);
+
+	ssd1306_SetCursor(3 , 50);
+	ssd1306_WriteString("in port: ", Font_7x10, White);
+	ssd1306_SetCursor(70, 50);
+	ssd1306_WriteInt(self->inputPort, Font_7x10, White);
+	ssd1306_UpdateScreen();
+
+
+	// start receiving
+	memset(self->uart_buff, 0, UART_BUFF_SIZE);
+	HAL_UART_Receive_IT(conf_uart, self->uart_buff, UART_BUFF_SIZE);
 }
 
 void general_task_loop(general_task_t* self)
@@ -247,7 +326,7 @@ void general_task_loop(general_task_t* self)
 		tx_message_set_adc_dr_uV(&self->txMessage, (int32_t)(adc_get_vout(&self->adcDoseRate) * 1e+6));
 		tx_message_set_adc_dr_average_uV(&self->txMessage, (int32_t)(adc_monitor_get_average_signal_value(&self->adcDRMonitor) * 1e+6));
 		tx_message_set_hv_out_mV(&self->txMessage, (int32_t)(hv_get_output_voltage_V(&self->hv_system) * 1e+3)); // hv offset!!!
-		tx_message_set_press_out_Pa(&self->txMessage, adc_get_vout(&self->adcPressure) * self->pressureCoeff);
+		tx_message_set_press_out_Pa(&self->txMessage, pressure_sensor_get_Pa(&self->pressureSensor));
 		tx_message_set_adc_dr_measure_state(&self->txMessage, adc_monitor_get_measurement_state(&self->adcDRMonitor));
 		tx_message_set_adc_dr_measure_time(&self->txMessage, adc_monitor_get_measurement_cycle_no(&self->adcDRMonitor) * 3 / self->freqIT );
 		HAL_NVIC_EnableIRQ(USR_ADC_TIM_IRQn);
@@ -259,7 +338,7 @@ void general_task_loop(general_task_t* self)
 		tcp_input_stream_routine(&self->tcpInput);
 
 		// Update screen
-		screen_update(self->currentScreen);
+		//screen_update(self->currentScreen);
 
 		// debug!!!
 		//general_task_timer_interrupt(self);
@@ -293,6 +372,13 @@ void general_task_timer_interrupt(general_task_t* self)
 		self->adcNoCnt = 0;
 		break;
 	}
+}
+
+void general_task_uart_recv_callback(general_task_t* self)
+{
+	uart_handle_rx_message(conf_uart, self->uart_buff);
+	memset(self->uart_buff, 0, UART_BUFF_SIZE);
+	HAL_UART_Receive_IT(conf_uart, self->uart_buff, UART_BUFF_SIZE);
 }
 
 

@@ -1,0 +1,3 @@
+../Core/Src/flash_manager/flash_data.c:27:13:flash_data_erase_sector	32	static,ignoring_inline_asm
+../Core/Src/flash_manager/flash_data.c:49:6:flash_data_write	40	static,ignoring_inline_asm
+../Core/Src/flash_manager/flash_data.c:69:14:flash_data_read	40	static
