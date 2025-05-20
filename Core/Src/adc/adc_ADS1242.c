@@ -122,16 +122,28 @@ static void update(adc_t* self, void* option)
 			const uint8_t kBufferSizeBytes = 4;
 			uint8_t rxBytes [kBufferSizeBytes];
 			memset(rxBytes, 0, kBufferSizeBytes);
+
 			spi_select(self);
 			spi_hw_command(self, CMD_RDATA);
+
+			int j = 400;
+			while(j--) ;
+
 			int i;
 			for(i = 0; i < kDataSizeBytes; ++i)
 			{
 				HAL_SPI_TransmitReceive(self->data->hspi, &CMD_NOP, rxBytes + kDataSizeBytes - i - 1, 1, ADC_ADS1242_SPI_TIMEOUT);
+				//HAL_SPI_Receive(self->data->hspi, rxBytes + kDataSizeBytes - i - 1, 1, ADC_ADS1242_SPI_TIMEOUT);
+
 				while(HAL_SPI_GetState(self->data->hspi) != HAL_SPI_STATE_READY)
 					;
 			}
+
+
 			spi_deselect(self);
+
+
+
 			check_negative_24_to_32((int32_t*)rxBytes);
 			self->data->lastOutputValue = *(int32_t*)rxBytes;
 			break;

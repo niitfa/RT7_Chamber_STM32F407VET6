@@ -355,10 +355,10 @@ static void MX_SPI3_Init(void)
   hspi3.Init.Mode = SPI_MODE_MASTER;
   hspi3.Init.Direction = SPI_DIRECTION_2LINES;
   hspi3.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi3.Init.CLKPolarity = SPI_POLARITY_HIGH;
-  hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi3.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi3.Init.NSS = SPI_NSS_SOFT;
-  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
+  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -475,10 +475,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, ETH_SPI_CS_Pin|ETH_RESET_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, ADC_DOSE_xPWDN_Pin|ADC_DOSE_START_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0|DAC_SPI_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0|DAC_SPI_CS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, ADC_DOSE_START_Pin|ADC_DOSE_XPWDN_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : SENSOR_RANGE_SELECT_Pin HV_INPUT_SELECT_Pin */
   GPIO_InitStruct.Pin = SENSOR_RANGE_SELECT_Pin|HV_INPUT_SELECT_Pin;
@@ -501,12 +501,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : ETH_SPI_CS_Pin */
-  GPIO_InitStruct.Pin = ETH_SPI_CS_Pin;
+  /*Configure GPIO pins : ETH_SPI_CS_Pin ADC_DOSE_START_Pin ADC_DOSE_XPWDN_Pin */
+  GPIO_InitStruct.Pin = ETH_SPI_CS_Pin|ADC_DOSE_START_Pin|ADC_DOSE_XPWDN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(ETH_SPI_CS_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : ETH_RESET_Pin */
   GPIO_InitStruct.Pin = ETH_RESET_Pin;
@@ -514,13 +514,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(ETH_RESET_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : ADC_DOSE_xPWDN_Pin ADC_DOSE_START_Pin */
-  GPIO_InitStruct.Pin = ADC_DOSE_xPWDN_Pin|ADC_DOSE_START_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PD0 */
   GPIO_InitStruct.Pin = GPIO_PIN_0;

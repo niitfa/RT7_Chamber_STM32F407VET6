@@ -1,7 +1,7 @@
-../Core/Src/general_task/general_task.c:51:6:general_task_init	4
-../Core/Src/general_task/general_task.c:268:6:general_task_setup	1
-../Core/Src/general_task/general_task.c:317:6:general_task_loop	2
-../Core/Src/general_task/general_task.c:351:6:general_task_timer_interrupt	5
-../Core/Src/general_task/general_task.c:377:6:general_task_uart_recv_callback	1
-../Core/Src/general_task/general_task.c:385:6:general_task_switch_screen	1
-../Core/Src/general_task/general_task.c:392:10:general_task_get_loop_period_ms	1
+../Core/Src/general_task/general_task.c:56:6:general_task_init	4
+../Core/Src/general_task/general_task.c:308:6:general_task_setup	1
+../Core/Src/general_task/general_task.c:357:6:general_task_loop	2
+../Core/Src/general_task/general_task.c:391:6:general_task_timer_interrupt	5
+../Core/Src/general_task/general_task.c:417:6:general_task_uart_recv_callback	1
+../Core/Src/general_task/general_task.c:425:6:general_task_switch_screen	1
+../Core/Src/general_task/general_task.c:432:10:general_task_get_loop_period_ms	1

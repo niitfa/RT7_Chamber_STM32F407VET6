@@ -51,6 +51,7 @@ Core/Src/general_task/general_task.o: \
  ../Core/Src/display_contents/screens/screen_1.h \
  ../Core/Src/display_contents/screens/screen.h \
  ../Core/Src/adc/adc_emulator.h ../Core/Src/adc/adc_AD7791.h \
+ ../Core/Src/adc/adc_ADS1246.h ../Core/Src/adc/adc_ADS1242.h \
  ../Core/Src/dac/dac_emulator.h ../Core/Src/dac/dac.h \
  ../Core/Src/dac/dac_MCP4811_EP.h ../Core/Src/adc/range_select.h \
  ../Core/Src/ssd1306/ssd1306.h ../Core/Src/ssd1306/ssd1306_conf.h \
@@ -112,6 +113,8 @@ Core/Src/general_task/general_task.o: \
 ../Core/Src/display_contents/screens/screen.h:
 ../Core/Src/adc/adc_emulator.h:
 ../Core/Src/adc/adc_AD7791.h:
+../Core/Src/adc/adc_ADS1246.h:
+../Core/Src/adc/adc_ADS1242.h:
 ../Core/Src/dac/dac_emulator.h:
 ../Core/Src/dac/dac.h:
 ../Core/Src/dac/dac_MCP4811_EP.h:

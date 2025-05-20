@@ -71,12 +71,12 @@ void Error_Handler(void);
 #define ETH_SPI_CS_GPIO_Port GPIOB
 #define ETH_RESET_Pin GPIO_PIN_11
 #define ETH_RESET_GPIO_Port GPIOB
-#define ADC_DOSE_xPWDN_Pin GPIO_PIN_7
-#define ADC_DOSE_xPWDN_GPIO_Port GPIOC
-#define ADC_DOSE_START_Pin GPIO_PIN_8
-#define ADC_DOSE_START_GPIO_Port GPIOC
 #define DAC_SPI_CS_Pin GPIO_PIN_1
 #define DAC_SPI_CS_GPIO_Port GPIOD
+#define ADC_DOSE_START_Pin GPIO_PIN_3
+#define ADC_DOSE_START_GPIO_Port GPIOB
+#define ADC_DOSE_XPWDN_Pin GPIO_PIN_5
+#define ADC_DOSE_XPWDN_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 #define USR_ADC_TIM_IRQn  TIM6_DAC_IRQn

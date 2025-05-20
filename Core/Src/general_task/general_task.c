@@ -16,6 +16,8 @@
 
 #include "adc_emulator.h"
 #include "adc_AD7791.h"
+#include "adc_ADS1246.h"
+#include "adc_ADS1242.h"
 
 #include "dac_emulator.h"
 #include "dac_MCP4811_EP.h"
@@ -27,6 +29,10 @@
 
 #include <time.h>
 #include <stdlib.h>
+
+#define ADS1242_EN 0
+#define ADS1246_EN 0
+#define AD7791_EN 1
 
 /*
  * TO DO
@@ -66,7 +72,7 @@ void general_task_init(general_task_t* self)
 	double Vref_press = 0;
 
 	/* ADC Dose Rate - bipolar */
-	// Filter register mode
+	/*// Filter register mode
 	FR_word = 0;
 	FS = 0b011;
 	CDIV = 0b00;
@@ -91,7 +97,43 @@ void general_task_init(general_task_t* self)
 
 	self->adcDoseRate = adc_AD7791_create(&hspi3, ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin, Vref_dose, FR_word, MR_word, adcWaitCycles);
 	adc_init(&self->adcDoseRate);
+	HAL_Delay(5); */
+
+	/* ADS 1246 */
+	Vref_dose = 2.5;
+
+#if ADS1246_EN
+	uint8_t PGA = 0b000;
+	uint8_t DR = 0b0010;
+	uint8_t SYS0 = DR | (PGA << 4);
+	self->adcDoseRate = adc_ADS1246_create(&hspi3,
+			ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin,
+			NULL, 0,
+			ADC_DOSE_START_GPIO_Port, ADC_DOSE_START_Pin,
+			ADC_DOSE_XPWDN_GPIO_Port, ADC_DOSE_XPWDN_Pin,
+			Vref_dose,
+			SYS0,
+			adcWaitCycles
+			);
+#endif
+
+#if ADS1242_EN
+	self->adcDoseRate = adc_ADS1242_create(&hspi3,
+			ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin,
+			NULL, 0,
+			ADC_DOSE_XPWDN_GPIO_Port, ADC_DOSE_XPWDN_Pin,
+			ADS1242_AIN_3, ADS1242_AIN_2,
+			//ADS1242_AIN_3, ADS1242_AIN_2,
+			Vref_dose,
+			adcWaitCycles
+			);
+#endif
+
+
+	adc_init(&self->adcDoseRate);
 	HAL_Delay(5);
+
+
 
 	/* ADC HV - bipolar */
 	// Filter register mode
@@ -193,8 +235,7 @@ void general_task_init(general_task_t* self)
 
 
 	HAL_Delay(5);
-	/* Ethernet */
-	// default values
+	/* Ethernet */	// default values
 	uint8_t defIP[4] = {169, 254, 206, 12};
 	uint16_t defInputPort = 22252;
 	uint16_t defOutputPort = 22251;
@@ -338,7 +379,7 @@ void general_task_loop(general_task_t* self)
 		tcp_input_stream_routine(&self->tcpInput);
 
 		// Update screen
-		//screen_update(self->currentScreen);
+		screen_update(self->currentScreen);
 
 		// debug!!!
 		//general_task_timer_interrupt(self);
