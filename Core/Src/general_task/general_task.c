@@ -40,9 +40,6 @@
  * 2) coeff for pressure adc (mV to Pa) - now 1000 in tx_message_set_pressure_Pa(...) in update()
  */
 
-// DISABLED HV & PRESSURE ADC 2025-05-21 !!!!
-
-
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi2;
 extern SPI_HandleTypeDef hspi3;
@@ -228,15 +225,15 @@ void general_task_init(general_task_t* self)
 
 	// reading from flash
 	flash_data_t fdata = flash_data_read();
-	if(fdata.input_port != 0xFFFF)
+	if(fdata.input_port != 0xFFFF && fdata.input_port != 0x0000)
 	{
 		self->inputPort = fdata.input_port;
 	}
-	if(fdata.output_port != 0xFFFF)
+	if(fdata.output_port != 0xFFFF && fdata.output_port != 0x0000)
 	{
 		self->outputPort = fdata.output_port;
 	}
-	if(*(uint32_t*)fdata.ip != 0xFFFFFFFF)
+	if(*(uint32_t*)fdata.ip != 0xFFFFFFFF && *(uint32_t*)fdata.ip != 0x00000000)
 	{
 		memcpy(self->ip, fdata.ip, 4);
 	}
