@@ -31,14 +31,16 @@
 #include <stdlib.h>
 
 #define ADS1242_EN 0
-#define ADS1246_EN 0
-#define AD7791_EN 1
+#define ADS1246_EN 1
+#define AD7791_EN 0
 
 /*
  * TO DO
  * 1) Take tcp routine state machine from stepper`s
  * 2) coeff for pressure adc (mV to Pa) - now 1000 in tx_message_set_pressure_Pa(...) in update()
  */
+
+// DISABLED HV & PRESSURE ADC 2025-05-21 !!!!
 
 
 extern SPI_HandleTypeDef hspi1;
@@ -59,20 +61,17 @@ void general_task_init(general_task_t* self)
 	HAL_Delay(100);
 	memset(self, 0, sizeof(*self));
 
-	self->loopPeriod_ms = 50;
+	self->loopPeriod_ms = 1;
 	self->freqIT = TIMER_FREQUENCY / (adctim->Init.Period + 1) / (adctim->Init.Prescaler + 1);
 	self->adcNoCnt = 0;
 
 	/* ADC */
-	uint32_t adcWaitCycles = 20;
-	uint8_t MR_word, BUF, UnB, BO, MD; // mode register options
-	uint8_t FR_word, FS, CDIV; // filter register options
-	double Vref_dose = 0;
-	double Vref_hv = 0;
-	double Vref_press = 0;
-
+	uint32_t adcWaitCycles = 120;
 	/* ADC Dose Rate - bipolar */
-	/*// Filter register mode
+// Filter register mode
+#if AD7791_EN
+	double Vref_dose = 2.5;
+
 	FR_word = 0;
 	FS = 0b011;
 	CDIV = 0b00;
@@ -93,31 +92,31 @@ void general_task_init(general_task_t* self)
 	MR_word += (BO << 3);
 	MR_word += (MD << 6);
 
-	Vref_dose = 2.5;
-
 	self->adcDoseRate = adc_AD7791_create(&hspi3, ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin, Vref_dose, FR_word, MR_word, adcWaitCycles);
 	adc_init(&self->adcDoseRate);
-	HAL_Delay(5); */
-
-	/* ADS 1246 */
-	Vref_dose = 2.5;
-
+	HAL_Delay(5);
+#endif
 #if ADS1246_EN
-	uint8_t PGA = 0b000;
-	uint8_t DR = 0b0010;
-	uint8_t SYS0 = DR | (PGA << 4);
+	double Vref_dose = 2.5;
+
+	uint8_t PGA_dose = 0b000;
+	uint8_t DR_dose = 0b0010; // was 0b0010
+	uint8_t SYS0_dose = DR_dose | (PGA_dose << 4);
 	self->adcDoseRate = adc_ADS1246_create(&hspi3,
 			ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin,
+			ADC_DOSE_xDRDY_GPIO_Port, ADC_DOSE_xDRDY_Pin,
+			//ADC_DOSE_START_GPIO_Port, ADC_DOSE_START_Pin,
+			//ADC_DOSE_XPWDN_GPIO_Port, ADC_DOSE_XPWDN_Pin,
 			NULL, 0,
-			ADC_DOSE_START_GPIO_Port, ADC_DOSE_START_Pin,
-			ADC_DOSE_XPWDN_GPIO_Port, ADC_DOSE_XPWDN_Pin,
+			NULL, 0,
 			Vref_dose,
-			SYS0,
+			SYS0_dose,
 			adcWaitCycles
 			);
 #endif
-
 #if ADS1242_EN
+	double Vref_dose = 2.5;
+
 	self->adcDoseRate = adc_ADS1242_create(&hspi3,
 			ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin,
 			NULL, 0,
@@ -129,67 +128,48 @@ void general_task_init(general_task_t* self)
 			);
 #endif
 
-
 	adc_init(&self->adcDoseRate);
 	HAL_Delay(5);
 
 
 
 	/* ADC HV - bipolar */
-	// Filter register mode
-	FR_word = 0;
-	FS = 0b011;
-	CDIV = 0b00;
+	//self->adcHV = adc_AD7791_create(&hspi1, ADC_HV_SPI_CS_GPIO_Port, ADC_HV_SPI_CS_Pin, Vref_hv, FR_word, MR_word, adcWaitCycles + 10);
 
-	FR_word = 0;
-	FR_word += (FS << 0);
-	FR_word += (CDIV << 4);
+	double Vref_hv = 2.5;
+	uint8_t PGA_hv = 0b000;
+	uint8_t DR_hv = 0b0010; // was 0b0010
+	uint8_t SYS0_hv = DR_hv | (PGA_hv << 4);
+	self->adcHV = adc_ADS1246_create(&hspi1,
+			ADC_HV_SPI_CS_GPIO_Port, ADC_HV_SPI_CS_Pin,
+			ADC_HV_xDRDY_GPIO_Port, ADC_HV_xDRDY_Pin,
+			NULL, 0,
+			NULL, 0,
+			Vref_hv,
+			SYS0_hv,
+			adcWaitCycles
+			);
 
-	// Mode register word
-	BUF 	= 0b1;
-	UnB 	= 0b0; // 0 - bipolar, 1 - unipolar
-	BO 		= 0b0; // 0 - disable / 1 - enable burnout current
-	MD 		= 0b00; // single - 0b10, cont - 0b00
-
-	MR_word = 0;
-	MR_word += (BUF << 1);
-	MR_word += (UnB << 2);
-	MR_word += (BO << 3);
-	MR_word += (MD << 6);
-
-	Vref_hv = 2.5;
-
-	self->adcHV = adc_AD7791_create(&hspi1, ADC_HV_SPI_CS_GPIO_Port, ADC_HV_SPI_CS_Pin, Vref_hv, FR_word, MR_word, adcWaitCycles + 10);
 	adc_init(&self->adcHV);
 	HAL_Delay(5);
 
 	/* ADC Pressure - unipolar */
 	// Filter register mode
-	FR_word = 0;
-	FS = 0b011;
-	CDIV = 0b00;
+	double Vref_press = 2.5;
+	uint8_t PGA_press = 0b000;
+	uint8_t DR_press = 0b0010; // was 0b0010
+	uint8_t SYS0_press = DR_press | (PGA_press << 4);
+	self->adcPressure= adc_ADS1246_create(&hspi1,
+			ADC_PRESS_SPI_CS_GPIO_Port, ADC_PRESS_SPI_CS_Pin,
+			ADC_PRESS_xDRDY_GPIO_Port, ADC_PRESS_xDRDY_Pin,
+			NULL, 0,
+			NULL, 0,
+			Vref_press,
+			SYS0_press,
+			adcWaitCycles
+			);
 
-	FR_word = 0;
-	FR_word += (FS << 0);
-	FR_word += (CDIV << 4);
-
-	// Mode register word
-	BUF 	= 0b1;
-	UnB 	= 0b1; // 0 - bipolar, 1 - unipolar
-	BO 		= 0b0; // 0 - disable / 1 - enable burnout current
-	MD 		= 0b00; // single - 0b10, cont - 0b00
-
-	MR_word = 0;
-	MR_word += (BUF << 1);
-	MR_word += (UnB << 2);
-	MR_word += (BO << 3);
-	MR_word += (MD << 6);
-
-	Vref_press = 2.5;
-
-	self->adcPressure = adc_AD7791_create(&hspi1, ADC_PRESS_SPI_CS_GPIO_Port, ADC_PRESS_SPI_CS_Pin, Vref_press, FR_word, MR_word, adcWaitCycles + 20);
 	adc_init(&self->adcPressure);
-	HAL_Delay(5);
 
 	/* ADC Dose Rate monitor */
 	adc_monitor_init(&self->adcDRMonitor, &self->adcDoseRate, USR_ADC_TIM_IRQn);
@@ -353,6 +333,8 @@ void general_task_setup(general_task_t* self)
 	// start receiving
 	memset(self->uart_buff, 0, UART_BUFF_SIZE);
 	HAL_UART_Receive_IT(conf_uart, self->uart_buff, UART_BUFF_SIZE);
+
+	HAL_Delay(1000);
 }
 
 void general_task_loop(general_task_t* self)
@@ -364,12 +346,13 @@ void general_task_loop(general_task_t* self)
 
 		// Output message
 		HAL_NVIC_DisableIRQ(USR_ADC_TIM_IRQn);
-		tx_message_set_adc_dr_uV(&self->txMessage, (int32_t)(adc_get_vout(&self->adcDoseRate) * 1e+6));
+		//tx_message_set_adc_dr_uV(&self->txMessage, (int32_t)(adc_get_vout(&self->adcDoseRate) * 1e+6));
+		tx_message_set_adc_dr_uV(&self->txMessage, (int32_t)(adc_get_cnt(&self->adcDoseRate)));
 		tx_message_set_adc_dr_average_uV(&self->txMessage, (int32_t)(adc_monitor_get_average_signal_value(&self->adcDRMonitor) * 1e+6));
 		tx_message_set_hv_out_mV(&self->txMessage, (int32_t)(hv_get_output_voltage_V(&self->hv_system) * 1e+3)); // hv offset!!!
 		tx_message_set_press_out_Pa(&self->txMessage, pressure_sensor_get_Pa(&self->pressureSensor));
 		tx_message_set_adc_dr_measure_state(&self->txMessage, adc_monitor_get_measurement_state(&self->adcDRMonitor));
-		tx_message_set_adc_dr_measure_time(&self->txMessage, adc_monitor_get_measurement_cycle_no(&self->adcDRMonitor) * 3 / self->freqIT );
+		tx_message_set_adc_dr_measure_time(&self->txMessage, adc_monitor_get_measurement_cycle_no(&self->adcDRMonitor)); // cycle, not time!!!!
 		HAL_NVIC_EnableIRQ(USR_ADC_TIM_IRQn);
 
 		tcp_output_stream_set_message(&self->tcpOutput, tx_message_get(&self->txMessage), tx_message_size());
@@ -391,26 +374,59 @@ void general_task_loop(general_task_t* self)
 
 void general_task_timer_interrupt(general_task_t* self)
 {
+	int nextStateCode = 0;
 	switch(self->adcNoCnt)
 	{
 	case 0:
-		tx_message_increase_id(&self->txMessage);
 		/* Dose ADC*/
-		adc_update(&self->adcDoseRate, NULL);
-		adc_monitor_update(&self->adcDRMonitor);
-		self->adcNoCnt++;
+		//adc_update(&self->adcDoseRate, NULL);
+		//adc_monitor_update(&self->adcDRMonitor);
+		//self->adcNoCnt++;
+
+		adc_update(&self->adcDoseRate, (void*)&nextStateCode);
+		if(nextStateCode == ADS1246_MEASURE) // current state is ADS1246_CHECK_xDRDY
+		{
+			tx_message_increase_id(&self->txMessage);
+			adc_monitor_update(&self->adcDRMonitor);
+		}
+		else
+		{
+			self->adcNoCnt++;
+		}
 		break;
 	case 1:
 		/* HV ADC*/
-		adc_update(&self->adcHV, NULL);
-		adc_monitor_update(&self->adcHVMonitor);
-		self->adcNoCnt++;
+		//adc_update(&self->adcHV, NULL);
+		//adc_monitor_update(&self->adcHVMonitor);
+		//self->adcNoCnt++;
+
+		adc_update(&self->adcHV, (void*)&nextStateCode);
+		if(nextStateCode == ADS1246_MEASURE) // current state is ADS1246_CHECK_xDRDY
+		{
+			adc_monitor_update(&self->adcHVMonitor);
+		}
+		else
+		{
+			self->adcNoCnt++;
+		}
+
 		break;
 	case 2:
 		/* Pressure ADC */
-		adc_update(&self->adcPressure, NULL);
-		adc_monitor_update(&self->adcPRMonitor);
-		self->adcNoCnt = 0;
+		//adc_update(&self->adcPressure, NULL);
+		//adc_monitor_update(&self->adcPRMonitor);
+		//self->adcNoCnt = 0;
+
+		adc_update(&self->adcPressure, (void*)&nextStateCode);
+		if(nextStateCode == ADS1246_MEASURE) // current state is ADS1246_CHECK_xDRDY
+		{
+			adc_monitor_update(&self->adcPRMonitor);
+		}
+		else
+		{
+			self->adcNoCnt = 0;
+		}
+
 		break;
 	}
 }

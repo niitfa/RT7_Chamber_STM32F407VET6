@@ -8,8 +8,16 @@
 #ifndef SRC_ADC_ADC_AD7791_H_
 #define SRC_ADC_ADC_AD7791_H_
 
+/* SPI CONF
+ * freq < 5 MHz
+ * CPOL = HIGH
+ * CPHA = 2 (from 1 and 2)
+ */
+
 #include "adc.h"
 #include "stm32f4xx_hal.h"
+
+
 
 // heap allocation here!!!
 

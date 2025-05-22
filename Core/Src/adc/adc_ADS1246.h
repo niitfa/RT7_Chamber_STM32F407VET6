@@ -20,6 +20,15 @@
 #include "adc.h"
 #include "stm32f4xx_hal.h"
 
+typedef enum
+{
+	ADS1246_WAIT,
+	ADS1246_WAKEUP,
+	ADS1246_SETUP_SYS0,
+	ADS1246_CHECK_xDRDY,
+	ADS1246_MEASURE
+} ADS1246_state_t;
+
 adc_t adc_ADS1246_create(
 		SPI_HandleTypeDef* hspi,
 		GPIO_TypeDef* portCS,

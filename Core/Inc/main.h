@@ -57,6 +57,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define ADC_PRESS_xDRDY_Pin GPIO_PIN_3
+#define ADC_PRESS_xDRDY_GPIO_Port GPIOE
+#define ADC_DOSE_xDRDY_Pin GPIO_PIN_4
+#define ADC_DOSE_xDRDY_GPIO_Port GPIOE
+#define ADC_HV_xDRDY_Pin GPIO_PIN_5
+#define ADC_HV_xDRDY_GPIO_Port GPIOE
 #define SENSOR_RANGE_SELECT_Pin GPIO_PIN_2
 #define SENSOR_RANGE_SELECT_GPIO_Port GPIOC
 #define HV_INPUT_SELECT_Pin GPIO_PIN_3

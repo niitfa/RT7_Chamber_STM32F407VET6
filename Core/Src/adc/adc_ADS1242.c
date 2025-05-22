@@ -126,7 +126,7 @@ static void update(adc_t* self, void* option)
 			spi_select(self);
 			spi_hw_command(self, CMD_RDATA);
 
-			int j = 400;
+			int j = 500;
 			while(j--) ;
 
 			int i;

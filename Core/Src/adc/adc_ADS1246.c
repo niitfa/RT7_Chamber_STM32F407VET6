@@ -25,15 +25,6 @@ static uint8_t CMD_WREG 	= 0x40;
 
 static uint8_t REG_SYS0 = 0x03;
 
-
-typedef enum
-{
-	ADS1246_WAIT,
-	ADS1246_WAKEUP,
-	ADS1246_SETUP_SYS0,
-	ADS1246_MEASURE
-} ADS1246_state_t;
-
 #define ADC_ADS1246_SPI_TIMEOUT 10
 
 static void spi_select(adc_t* self);
@@ -59,6 +50,8 @@ struct adc_data_t
 	double Vref;
 	int32_t lastOutputValue;
 	int32_t maxOutputValue;
+
+	int32_t frameNo;
 
 	//uint8_t FR_word;
 	uint8_t SYS0_conf;
@@ -109,7 +102,23 @@ static void update(adc_t* self, void* option)
 			spi_hw_command(self, 0); // 1 byte
 			spi_hw_command(self, self->data->SYS0_conf);
 			spi_deselect(self);
-			self->data->state = ADS1246_MEASURE;
+			self->data->state = ADS1246_CHECK_xDRDY;
+			break;
+		case ADS1246_CHECK_xDRDY:
+			if(self->data->portDRDY)
+			{
+				// check xDRDY state before transit
+				if(!HAL_GPIO_ReadPin(self->data->portDRDY, self->data->pinDRDY))
+				{
+					self->data->state = ADS1246_MEASURE;
+				}
+			}
+			else
+			{
+				// transit unconditionally
+				self->data->state = ADS1246_MEASURE;
+			}
+
 			break;
 		case ADS1246_MEASURE:
 			const uint8_t kDataSizeBytes = 3;
@@ -117,7 +126,7 @@ static void update(adc_t* self, void* option)
 			uint8_t rxBytes [kBufferSizeBytes];
 			memset(rxBytes, 0, kBufferSizeBytes);
 			spi_select(self);
-			spi_hw_command(self, CMD_RDATA);
+			spi_hw_command(self, CMD_RDATA); // can avoid sending command???
 			int i;
 			for(i = 0; i < kDataSizeBytes; ++i)
 			{
@@ -128,8 +137,11 @@ static void update(adc_t* self, void* option)
 			spi_deselect(self);
 			check_negative_24_to_32((int32_t*)rxBytes);
 			self->data->lastOutputValue = *(int32_t*)rxBytes;
+			self->data->state = ADS1246_CHECK_xDRDY;
 			break;
 	}
+	// return state
+	if(option) *(int*)option = self->data->state;
 }
 
 static uint32_t get_cnt(adc_t* self)
@@ -179,6 +191,7 @@ adc_t adc_ADS1246_create(
 		pdata->lastOutputValue = 0;
 		pdata->bitResolution = 24;
 		pdata->maxOutputValue = (uint32_t)pow(2, pdata->bitResolution);
+		pdata->frameNo = 0;
 		pdata->SYS0_conf = SYS0_conf;
 		pdata->waitCycles = waitCycles;
 		pdata->setupWaitCyclesMax = 5;

@@ -391,9 +391,9 @@ static void MX_TIM6_Init(void)
 
   /* USER CODE END TIM6_Init 1 */
   htim6.Instance = TIM6;
-  htim6.Init.Prescaler = 1000 - 1;
+  htim6.Init.Prescaler = 84 - 1;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 4200 / 3 - 1;
+  htim6.Init.Period = 50 - 1;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -456,9 +456,9 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
@@ -479,6 +479,12 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, ADC_DOSE_START_Pin|ADC_DOSE_XPWDN_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pins : ADC_PRESS_xDRDY_Pin ADC_DOSE_xDRDY_Pin ADC_HV_xDRDY_Pin */
+  GPIO_InitStruct.Pin = ADC_PRESS_xDRDY_Pin|ADC_DOSE_xDRDY_Pin|ADC_HV_xDRDY_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SENSOR_RANGE_SELECT_Pin HV_INPUT_SELECT_Pin */
   GPIO_InitStruct.Pin = SENSOR_RANGE_SELECT_Pin|HV_INPUT_SELECT_Pin;
@@ -537,10 +543,12 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
+	HAL_NVIC_DisableIRQ(USR_ADC_TIM_IRQn);
 	if(htim == adctim)
 	{
 		general_task_timer_interrupt(&task);
 	}
+	HAL_NVIC_EnableIRQ(USR_ADC_TIM_IRQn);
 
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {

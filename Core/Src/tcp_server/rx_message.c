@@ -32,7 +32,7 @@ void rx_message_run_command(char* msg)
 	case COMM_START_MEAS:
 		if(param >= 0) // [param] = seconds
 		{
-			adc_monitor_start_measurement(&task.adcDRMonitor, task.freqIT / 3 * param);
+			adc_monitor_start_measurement(&task.adcDRMonitor, param);
 		}
 		break;
 	case COMM_RESET_MEAS:
