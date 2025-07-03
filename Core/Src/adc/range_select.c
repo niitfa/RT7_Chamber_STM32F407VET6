@@ -35,4 +35,13 @@ void select_narrow_adc_dose_range()
 	}
 }
 
+int8_t get_current_adc_dose_range()
+{
+	if(rangeSelectPort)
+	{
+		return HAL_GPIO_ReadPin(rangeSelectPort, rangeSelectPin);
+	}
+	return 0;
+}
+
 

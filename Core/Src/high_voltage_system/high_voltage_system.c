@@ -44,13 +44,18 @@ void hv_select_positive_source(high_voltage_system_t* self)
 	HAL_GPIO_WritePin(self->portSelectHV, self->pinSelectHV, HV_POSITIVE_SOURCE);
 }
 
+int8_t hv_get_source_polarity(high_voltage_system_t* self)
+{
+	return HAL_GPIO_ReadPin(self->portSelectHV, self->pinSelectHV);
+}
+
 void hv_set_abs_output_voltage_V(high_voltage_system_t* self, double Vout)
 {
 	uint32_t digital = (uint32_t)round(fmin(Vout, self->VoutMax) / self->VoutStep_V);
 	dac_set_input_value(self->inputDAC, digital);
 }
 
-double hv_get_output_voltage_V(high_voltage_system_t* self)
+int16_t hv_get_output_voltage_V(high_voltage_system_t* self)
 {
 	return (adc_get_vout(self->outputADC) - self->VoutOffsetADC_V) / self->VoutGainADC;
 }

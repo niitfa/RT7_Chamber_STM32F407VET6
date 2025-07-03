@@ -21,7 +21,8 @@ typedef enum
 typedef struct
 {
 	adc_t* adc;
-	double currValue, averageValue;
+	//double currValue, averageValue;
+	int32_t currValueCnt, averageValueCnt;
 	adc_monitor_state_t state;
 	uint32_t measurementCycles, measurementCyclesMax;
 	IRQn_Type IRQn;
@@ -33,7 +34,8 @@ void adc_monitor_update(adc_monitor_t* self);
 void adc_monitor_start_measurement(adc_monitor_t* self, uint32_t cycles);
 void adc_monitor_reset_measurement(adc_monitor_t* self);
 
-double adc_monitor_get_average_signal_value(adc_monitor_t* self);
+//double adc_monitor_get_average_signal_value(adc_monitor_t* self);
+int32_t adc_monitor_get_average_value(adc_monitor_t* self);
 uint32_t adc_monitor_get_measurement_cycle_no(adc_monitor_t* self);
 int8_t adc_monitor_get_measurement_state(adc_monitor_t* self);
 

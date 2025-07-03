@@ -178,10 +178,10 @@ void general_task_init(general_task_t* self)
 	adc_monitor_init(&self->adcPRMonitor, &self->adcPressure, USR_ADC_TIM_IRQn);
 
 	/* Pressure sensor */
-	float pressureOffsetPa = -1e+5;
-	float PaPerV = 20 * 1e+5 / 2.5;
+	int pressureOffsetkPa = 100; // kPa
+	float kPaPerV = 20. * 1e+2 / 2.5;
 
-	pressure_sensor_init(&self->pressureSensor, pressureOffsetPa, PaPerV, &self->adcPressure);
+	pressure_sensor_init(&self->pressureSensor, pressureOffsetkPa, kPaPerV, &self->adcPressure);
 
 	/* DAC HV Input */
 	//self->dacInputHV = dac_emulator_create(); // emulator
@@ -243,7 +243,7 @@ void general_task_init(general_task_t* self)
 			.mac 	= {0xed, 0xa2, 0xb3, 0xff, 0xfe, 0xa9},
 			.ip 	= {self->ip[0], self->ip[1], self->ip[2], self->ip[3]}, // 169.254.206.240
 			.sn 	= {255, 255, 255, 0},
-			.gw		= {self->ip[0], self->ip[1], self->ip[2], self->ip[3]}, // {169, 254, 206, 1},
+			.gw		= {self->ip[0], self->ip[1], self->ip[2], 1}, // {169, 254, 206, 1},
 			.dns 	= {0, 0, 0, 0},
 			.dhcp 	= NETINFO_STATIC
 	};
@@ -343,11 +343,12 @@ void general_task_loop(general_task_t* self)
 
 		// Output message
 		HAL_NVIC_DisableIRQ(USR_ADC_TIM_IRQn);
-		//tx_message_set_adc_dr_uV(&self->txMessage, (int32_t)(adc_get_vout(&self->adcDoseRate) * 1e+6));
-		tx_message_set_adc_dr_uV(&self->txMessage, (int32_t)(adc_get_cnt(&self->adcDoseRate)));
-		tx_message_set_adc_dr_average_uV(&self->txMessage, (int32_t)(adc_monitor_get_average_signal_value(&self->adcDRMonitor) * 1e+6));
-		tx_message_set_hv_out_mV(&self->txMessage, (int32_t)(hv_get_output_voltage_V(&self->hv_system) * 1e+3)); // hv offset!!!
-		tx_message_set_press_out_Pa(&self->txMessage, pressure_sensor_get_Pa(&self->pressureSensor));
+		tx_message_set_adc_dr_cnt(&self->txMessage, (int32_t)(adc_get_cnt(&self->adcDoseRate))); // DONT uV, raw adc counts!!!!!
+		tx_message_set_adc_dr_average_cnt(&self->txMessage, adc_monitor_get_average_value(&self->adcDRMonitor)); // DONT uV, raw adc counts!!!!!
+		tx_message_set_hv_out_V(&self->txMessage, (int32_t)(hv_get_output_voltage_V(&self->hv_system))); // DONT mV, V!!!!
+		tx_message_set_hv_polarity(&self->txMessage, hv_get_source_polarity(&self->hv_system)); // 1
+		tx_message_set_range(&self->txMessage, get_current_adc_dose_range()); // 1
+		tx_message_set_press_out_kPa(&self->txMessage, pressure_sensor_get_kPa(&self->pressureSensor));
 		tx_message_set_adc_dr_measure_state(&self->txMessage, adc_monitor_get_measurement_state(&self->adcDRMonitor));
 		tx_message_set_adc_dr_measure_time(&self->txMessage, adc_monitor_get_measurement_cycle_no(&self->adcDRMonitor)); // cycle, not time!!!!
 		HAL_NVIC_EnableIRQ(USR_ADC_TIM_IRQn);

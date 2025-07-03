@@ -11,7 +11,11 @@
 #define BYTE_POS_ID			 		0
 #define BYTE_POS_ADC_DR				4
 #define BYTE_POS_ADC_DR_AV			8
+
 #define BYTE_POS_HV_OUT	 			12
+#define BYTE_POS_HV_POL 			14
+#define BYTE_POS_RANGE	 			15
+
 #define BYTE_POS_PRESS_OUT	 		16
 #define BYTE_POS_DR_MEASURE_STATE	20
 #define BYTE_POS_DR_MEASURE_TIME	21
@@ -37,22 +41,32 @@ void tx_message_increase_id(tx_message_t *self)
 	memcpy(self->message + BYTE_POS_ID, (char*)&id, sizeof(id)); // copy increased id
 }
 
-void tx_message_set_adc_dr_uV(tx_message_t *self, int32_t val)
+void tx_message_set_adc_dr_cnt(tx_message_t *self, int32_t val)
 {
 	memcpy(self->message + BYTE_POS_ADC_DR, (char*)&val, sizeof(val));
 }
 
-void tx_message_set_adc_dr_average_uV(tx_message_t *self, int32_t val)
+void tx_message_set_adc_dr_average_cnt(tx_message_t *self, int32_t val)
 {
 	memcpy(self->message + BYTE_POS_ADC_DR_AV, (char*)&val, sizeof(val));
 }
 
-void tx_message_set_hv_out_mV(tx_message_t *self, int32_t val)
+void tx_message_set_hv_out_V(tx_message_t *self, int16_t val)
 {
 	memcpy(self->message + BYTE_POS_HV_OUT, (char*)&val, sizeof(val));
 }
 
-void tx_message_set_press_out_Pa(tx_message_t *self, int32_t val)
+void tx_message_set_hv_polarity(tx_message_t *self, int8_t val)
+{
+	memcpy(self->message + BYTE_POS_HV_POL, (char*)&val, sizeof(val));
+}
+
+void tx_message_set_range(tx_message_t *self, int8_t val)
+{
+	memcpy(self->message + BYTE_POS_RANGE, (char*)&val, sizeof(val));
+}
+
+void tx_message_set_press_out_kPa(tx_message_t *self, int32_t val)
 {
 	memcpy(self->message + BYTE_POS_PRESS_OUT, (char*)&val, sizeof(val));
 }

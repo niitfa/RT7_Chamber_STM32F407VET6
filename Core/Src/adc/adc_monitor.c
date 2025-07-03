@@ -16,23 +16,33 @@ void adc_monitor_init(adc_monitor_t* self, adc_t* adc, IRQn_Type IRQn)
 	self->adc = adc;
 	self->IRQn = IRQn;
 	self->state = ADC_STANDBY;
+	self->currValueCnt = 0;
+	self->averageValueCnt = 0;
+	//self->currValue = 0;
+	//self->averageValue = 0;
 }
 
 void adc_monitor_update(adc_monitor_t* self)
 {
-	self->currValue = adc_get_vout(self->adc);
+	//self->currValue 	= adc_get_vout(self->adc);
+	self->currValueCnt  = adc_get_cnt(self->adc);
 	switch(self->state)
 	{
 	case ADC_STANDBY:
-		self->averageValue 			= 0;
+		//self->averageValue 			= 0;
+		self->averageValueCnt		= 0;
 		self->measurementCycles 	= 0;
 		self->measurementCyclesMax	= 0;
 		break;
 	case ADC_PROCESS:
 		self->measurementCycles++;
-		self->averageValue =
-				((double)self->measurementCycles - 1) / self->measurementCycles * self->averageValue +
-				self->currValue / self->measurementCycles;
+		//self->averageValue =
+		//		((double)self->measurementCycles - 1) / self->measurementCycles * self->averageValue +
+		//		self->currValue / self->measurementCycles;
+		self->averageValueCnt = (int32_t) (
+				((double)self->measurementCycles - 1) / self->measurementCycles * self->averageValueCnt +
+				(double)self->currValueCnt / self->measurementCycles
+				);
 		if(self->measurementCycles >= self->measurementCyclesMax)
 		{
 			self->state = ADC_COMPLETED;
@@ -62,9 +72,14 @@ void adc_monitor_reset_measurement(adc_monitor_t* self)
 	HAL_NVIC_EnableIRQ(self->IRQn);
 }
 
-double adc_monitor_get_average_signal_value(adc_monitor_t* self)
+/*double adc_monitor_get_average_signal_value(adc_monitor_t* self)
 {
 	return self->averageValue;
+} */
+
+int32_t adc_monitor_get_average_value(adc_monitor_t* self)
+{
+	return self->averageValueCnt;
 }
 
 uint32_t adc_monitor_get_measurement_cycle_no(adc_monitor_t* self)

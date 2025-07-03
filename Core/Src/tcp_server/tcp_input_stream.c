@@ -72,7 +72,7 @@ int tcp_input_stream_routine(tcp_input_stream_t *self)
 		received = tcp_input_stream_receive(self);
 		if(received < 0)
 		{
-			disconnect(self->initData.sn);
+			tcp_input_stream_close_socket(self);
 		}
 		else
 		{
@@ -152,6 +152,7 @@ static int tcp_input_stream_receive(tcp_input_stream_t *self)
 
 int tcp_input_stream_close_socket(tcp_input_stream_t *self)
 {
+	disconnect(self->initData.sn);
 	close(self->initData.sn);
 	return 0;
 }

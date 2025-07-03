@@ -42,9 +42,10 @@ void hv_init(high_voltage_system_t* self,
 
 void hv_select_negative_source(high_voltage_system_t* self);
 void hv_select_positive_source(high_voltage_system_t* self);
+int8_t hv_get_source_polarity(high_voltage_system_t* self);
 
 void hv_set_abs_output_voltage_V(high_voltage_system_t* self, double Vout);
-double hv_get_output_voltage_V(high_voltage_system_t* self);
+int16_t hv_get_output_voltage_V(high_voltage_system_t* self);
 
 void hv_set_output_voltage_adc_offset(high_voltage_system_t* self, double offset_V);
 

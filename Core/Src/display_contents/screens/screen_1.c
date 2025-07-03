@@ -88,7 +88,7 @@ static void update_(screen_t* self)
 	self->data->adcHVValueCurr = adc_get_cnt(&task.adcHV);
 	self->data->adcPRValueCurr = adc_get_cnt(&task.adcPressure);
 
-	self->data->adcDRAverValueCurr = adc_monitor_get_average_signal_value(&task.adcDRMonitor) * 1e+6;
+	self->data->adcDRAverValueCurr = adc_monitor_get_average_value(&task.adcDRMonitor);
 
 	/*if(self->data->adcDRValuePrev != self->data->adcDRValueCurr)
 	{
@@ -121,7 +121,7 @@ static void update_(screen_t* self)
 	ssd1306_SetCursor(HV_DESC_X, HV_DESC_Y);
 	ssd1306_WriteString("HV:", *TEXT_FONT, White);
 	ssd1306_SetCursor(HV_VAL_X, HV_VAL_Y);
-	ssd1306_WriteInt((int)(hv_get_output_voltage_V(&task.hv_system)), *TEXT_FONT, White);
+	ssd1306_WriteInt((hv_get_output_voltage_V(&task.hv_system)), *TEXT_FONT, White);
 	//ssd1306_WriteInt(adc_get_cnt(&task.adcHV), *TEXT_FONT, White);
 	ssd1306_SetCursor(HV_UNIT_X, HV_UNIT_Y);
 	ssd1306_WriteString("V", *TEXT_FONT, White);
@@ -130,8 +130,7 @@ static void update_(screen_t* self)
 	ssd1306_SetCursor(PRESS_DESC_X, PRESS_DESC_Y);
 	ssd1306_WriteString("PR:", *TEXT_FONT, White);
 	ssd1306_SetCursor(PRESS_VAL_X, PRESS_VAL_Y);
-	ssd1306_WriteInt(pressure_sensor_get_Pa(&task.pressureSensor) / 1000, *TEXT_FONT, White);
-	//ssd1306_WriteInt(adc_get_vout(&task.adcPressure), *TEXT_FONT, White);
+	ssd1306_WriteInt(pressure_sensor_get_kPa(&task.pressureSensor), *TEXT_FONT, White);
 	ssd1306_SetCursor(PRESS_UNIT_X, PRESS_UNIT_Y);
 	ssd1306_WriteString("kPa", *TEXT_FONT, White);
 

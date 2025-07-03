@@ -1,7 +1,7 @@
 ../Core/Src/adc/adc_monitor.c:13:6:adc_monitor_init	24	static
-../Core/Src/adc/adc_monitor.c:21:6:adc_monitor_update	32	static
-../Core/Src/adc/adc_monitor.c:46:6:adc_monitor_start_measurement	16	static
-../Core/Src/adc/adc_monitor.c:58:6:adc_monitor_reset_measurement	16	static
-../Core/Src/adc/adc_monitor.c:65:8:adc_monitor_get_average_signal_value	16	static
-../Core/Src/adc/adc_monitor.c:70:10:adc_monitor_get_measurement_cycle_no	16	static
-../Core/Src/adc/adc_monitor.c:75:8:adc_monitor_get_measurement_state	16	static
+../Core/Src/adc/adc_monitor.c:25:6:adc_monitor_update	32	static
+../Core/Src/adc/adc_monitor.c:56:6:adc_monitor_start_measurement	16	static
+../Core/Src/adc/adc_monitor.c:68:6:adc_monitor_reset_measurement	16	static
+../Core/Src/adc/adc_monitor.c:80:9:adc_monitor_get_average_value	16	static
+../Core/Src/adc/adc_monitor.c:85:10:adc_monitor_get_measurement_cycle_no	16	static
+../Core/Src/adc/adc_monitor.c:90:8:adc_monitor_get_measurement_state	16	static
