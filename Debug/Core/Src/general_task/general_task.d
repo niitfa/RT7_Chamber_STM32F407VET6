@@ -42,10 +42,10 @@ Core/Src/general_task/general_task.o: \
  ../Core/Src/tcp_server/tcp_input_stream.h \
  ../Core/Src/w5500_ethernet/wiznet_api.h \
  ../Core/Src/tcp_server/tx_message.h ../Core/Src/adc/adc.h \
- ../Core/Src/dac/dac.h ../Core/Src/adc/adc_monitor.h \
+ ../Core/Src/dac/mcp4822.h ../Core/Src/adc/adc_monitor.h \
  ../Core/Src/adc/adc.h ../Core/Src/adc/counter.h \
  ../Core/Src/high_voltage_system/high_voltage_system.h \
- ../Core/Src/pressure_sensor/pressure_sensor.h \
+ ../Core/Src/dac/dac.h ../Core/Src/pressure_sensor/pressure_sensor.h \
  ../Core/Src/uart_rx_handler/uart_rx_handler.h \
  ../Core/Src/flash_manager/flash_data.h \
  ../Core/Src/display_contents/screens/screen_1.h \
@@ -101,11 +101,12 @@ Core/Src/general_task/general_task.o: \
 ../Core/Src/w5500_ethernet/wiznet_api.h:
 ../Core/Src/tcp_server/tx_message.h:
 ../Core/Src/adc/adc.h:
-../Core/Src/dac/dac.h:
+../Core/Src/dac/mcp4822.h:
 ../Core/Src/adc/adc_monitor.h:
 ../Core/Src/adc/adc.h:
 ../Core/Src/adc/counter.h:
 ../Core/Src/high_voltage_system/high_voltage_system.h:
+../Core/Src/dac/dac.h:
 ../Core/Src/pressure_sensor/pressure_sensor.h:
 ../Core/Src/uart_rx_handler/uart_rx_handler.h:
 ../Core/Src/flash_manager/flash_data.h:

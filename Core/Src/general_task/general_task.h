@@ -15,7 +15,7 @@
 #include "wiznet_api.h"
 #include "tx_message.h"
 #include "adc.h"
-#include "dac.h"
+#include "mcp4822.h"
 #include "adc_monitor.h"
 #include "counter.h"
 #include "high_voltage_system.h"
@@ -51,7 +51,7 @@ typedef struct
 	pressure_sensor_t pressureSensor;
 
 	/* DAC */
-	dac_t dacInputHV;
+	mcp4822_t dacInputHV;
 
 	/* HV System */
 	high_voltage_system_t hv_system;

@@ -12,7 +12,8 @@ static const int HV_POSITIVE_SOURCE = 0;
 static const int HV_NEGATIVE_SOURCE = 1;
 
 void hv_init(high_voltage_system_t* self,
-		dac_t* inputDAC,
+		//dac_t* inputDAC,
+		mcp4822_t* inputDAC,
 		adc_t* outputADC,
 		GPIO_TypeDef* portSelectHV,
 		uint16_t pinSelectHV,
@@ -52,7 +53,8 @@ int8_t hv_get_source_polarity(high_voltage_system_t* self)
 void hv_set_abs_output_voltage_V(high_voltage_system_t* self, double Vout)
 {
 	uint32_t digital = (uint32_t)round(fmin(Vout, self->VoutMax) / self->VoutStep_V);
-	dac_set_input_value(self->inputDAC, digital);
+	//dac_set_input_value(self->inputDAC, digital);
+	mcp4822_set_input_value(self->inputDAC, digital, 0);
 }
 
 int16_t hv_get_output_voltage_V(high_voltage_system_t* self)

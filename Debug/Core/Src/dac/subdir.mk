@@ -7,17 +7,20 @@
 C_SRCS += \
 ../Core/Src/dac/dac.c \
 ../Core/Src/dac/dac_MCP4811_EP.c \
-../Core/Src/dac/dac_emulator.c 
+../Core/Src/dac/dac_emulator.c \
+../Core/Src/dac/mcp4822.c 
 
 OBJS += \
 ./Core/Src/dac/dac.o \
 ./Core/Src/dac/dac_MCP4811_EP.o \
-./Core/Src/dac/dac_emulator.o 
+./Core/Src/dac/dac_emulator.o \
+./Core/Src/dac/mcp4822.o 
 
 C_DEPS += \
 ./Core/Src/dac/dac.d \
 ./Core/Src/dac/dac_MCP4811_EP.d \
-./Core/Src/dac/dac_emulator.d 
+./Core/Src/dac/dac_emulator.d \
+./Core/Src/dac/mcp4822.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -27,7 +30,7 @@ Core/Src/dac/%.o Core/Src/dac/%.su Core/Src/dac/%.cyclo: ../Core/Src/dac/%.c Cor
 clean: clean-Core-2f-Src-2f-dac
 
 clean-Core-2f-Src-2f-dac:
-	-$(RM) ./Core/Src/dac/dac.cyclo ./Core/Src/dac/dac.d ./Core/Src/dac/dac.o ./Core/Src/dac/dac.su ./Core/Src/dac/dac_MCP4811_EP.cyclo ./Core/Src/dac/dac_MCP4811_EP.d ./Core/Src/dac/dac_MCP4811_EP.o ./Core/Src/dac/dac_MCP4811_EP.su ./Core/Src/dac/dac_emulator.cyclo ./Core/Src/dac/dac_emulator.d ./Core/Src/dac/dac_emulator.o ./Core/Src/dac/dac_emulator.su
+	-$(RM) ./Core/Src/dac/dac.cyclo ./Core/Src/dac/dac.d ./Core/Src/dac/dac.o ./Core/Src/dac/dac.su ./Core/Src/dac/dac_MCP4811_EP.cyclo ./Core/Src/dac/dac_MCP4811_EP.d ./Core/Src/dac/dac_MCP4811_EP.o ./Core/Src/dac/dac_MCP4811_EP.su ./Core/Src/dac/dac_emulator.cyclo ./Core/Src/dac/dac_emulator.d ./Core/Src/dac/dac_emulator.o ./Core/Src/dac/dac_emulator.su ./Core/Src/dac/mcp4822.cyclo ./Core/Src/dac/mcp4822.d ./Core/Src/dac/mcp4822.o ./Core/Src/dac/mcp4822.su
 
 .PHONY: clean-Core-2f-Src-2f-dac
 

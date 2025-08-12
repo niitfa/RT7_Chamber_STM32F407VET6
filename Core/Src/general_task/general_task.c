@@ -66,36 +66,8 @@ void general_task_init(general_task_t* self)
 	uint32_t adcWaitCycles = 120;
 	/* ADC Dose Rate - bipolar */
 // Filter register mode
-#if AD7791_EN
+
 	double Vref_dose = 2.5;
-
-	FR_word = 0;
-	FS = 0b011;
-	CDIV = 0b00;
-
-	FR_word = 0;
-	FR_word += (FS << 0);
-	FR_word += (CDIV << 4);
-
-	// Mode register word
-	BUF 	= 0b1;
-	UnB 	= 0b0; // 0 - bipolar, 1 - unipolar
-	BO 		= 0b0; // 0 - disable / 1 - enable burnout current
-	MD 		= 0b00; // single - 0b10, cont - 0b00
-
-	MR_word = 0;
-	MR_word += (BUF << 1);
-	MR_word += (UnB << 2);
-	MR_word += (BO << 3);
-	MR_word += (MD << 6);
-
-	self->adcDoseRate = adc_AD7791_create(&hspi3, ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin, Vref_dose, FR_word, MR_word, adcWaitCycles);
-	adc_init(&self->adcDoseRate);
-	HAL_Delay(5);
-#endif
-#if ADS1246_EN
-	double Vref_dose = 2.5;
-
 	uint8_t PGA_dose = 0b000;
 	uint8_t DR_dose = 0b0010; // was 0b0010
 	uint8_t SYS0_dose = DR_dose | (PGA_dose << 4);
@@ -110,29 +82,13 @@ void general_task_init(general_task_t* self)
 			SYS0_dose,
 			adcWaitCycles
 			);
-#endif
-#if ADS1242_EN
-	double Vref_dose = 2.5;
 
-	self->adcDoseRate = adc_ADS1242_create(&hspi3,
-			ADC_DOSE_SPI_CS_GPIO_Port, ADC_DOSE_SPI_CS_Pin,
-			NULL, 0,
-			ADC_DOSE_XPWDN_GPIO_Port, ADC_DOSE_XPWDN_Pin,
-			ADS1242_AIN_3, ADS1242_AIN_2,
-			//ADS1242_AIN_3, ADS1242_AIN_2,
-			Vref_dose,
-			adcWaitCycles
-			);
-#endif
 
 	adc_init(&self->adcDoseRate);
 	HAL_Delay(5);
 
 
-
 	/* ADC HV - bipolar */
-	//self->adcHV = adc_AD7791_create(&hspi1, ADC_HV_SPI_CS_GPIO_Port, ADC_HV_SPI_CS_Pin, Vref_hv, FR_word, MR_word, adcWaitCycles + 10);
-
 	double Vref_hv = 2.5;
 	uint8_t PGA_hv = 0b000;
 	uint8_t DR_hv = 0b0010; // was 0b0010
@@ -151,7 +107,6 @@ void general_task_init(general_task_t* self)
 	HAL_Delay(5);
 
 	/* ADC Pressure - unipolar */
-	// Filter register mode
 	double Vref_press = 2.5;
 	uint8_t PGA_press = 0b000;
 	uint8_t DR_press = 0b0010; // was 0b0010
@@ -184,14 +139,9 @@ void general_task_init(general_task_t* self)
 	pressure_sensor_init(&self->pressureSensor, pressureOffsetkPa, kPaPerV, &self->adcPressure);
 
 	/* DAC HV Input */
-	//self->dacInputHV = dac_emulator_create(); // emulator
-	self->dacInputHV = dac_MCP4811EP_create(&hspi2,
-			DAC_SPI_CS_GPIO_Port, DAC_SPI_CS_Pin,
-			NULL, 0,
-			NULL, 0
-			); // real
+	mcp4822_init(&self->dacInputHV, &hspi2, DAC_SPI_CS_GPIO_Port,DAC_SPI_CS_Pin, NULL, 0);
 
-	dac_init(&self->dacInputHV);
+
 
 	/* HV System */
 	hv_init(&self->hv_system,

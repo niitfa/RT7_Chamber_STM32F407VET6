@@ -9,6 +9,7 @@
 "./Core/Src/dac/dac.o"
 "./Core/Src/dac/dac_MCP4811_EP.o"
 "./Core/Src/dac/dac_emulator.o"
+"./Core/Src/dac/mcp4822.o"
 "./Core/Src/display_contents/screens/screen.o"
 "./Core/Src/display_contents/screens/screen_1.o"
 "./Core/Src/display_contents/widgets/widget.o"

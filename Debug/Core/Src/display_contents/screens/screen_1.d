@@ -46,10 +46,10 @@ Core/Src/display_contents/screens/screen_1.o: \
  ../Core/Src/tcp_server/tcp_input_stream.h \
  ../Core/Src/w5500_ethernet/wiznet_api.h ../Core/Inc/main.h \
  ../Core/Src/tcp_server/tx_message.h ../Core/Src/adc/adc.h \
- ../Core/Src/dac/dac.h ../Core/Src/adc/adc_monitor.h \
+ ../Core/Src/dac/mcp4822.h ../Core/Src/adc/adc_monitor.h \
  ../Core/Src/adc/adc.h ../Core/Src/adc/counter.h \
  ../Core/Src/high_voltage_system/high_voltage_system.h \
- ../Core/Src/pressure_sensor/pressure_sensor.h
+ ../Core/Src/dac/dac.h ../Core/Src/pressure_sensor/pressure_sensor.h
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h:
 ../Drivers/CMSIS/Include/core_cm4.h:
@@ -101,9 +101,10 @@ Core/Src/display_contents/screens/screen_1.o: \
 ../Core/Inc/main.h:
 ../Core/Src/tcp_server/tx_message.h:
 ../Core/Src/adc/adc.h:
-../Core/Src/dac/dac.h:
+../Core/Src/dac/mcp4822.h:
 ../Core/Src/adc/adc_monitor.h:
 ../Core/Src/adc/adc.h:
 ../Core/Src/adc/counter.h:
 ../Core/Src/high_voltage_system/high_voltage_system.h:
+../Core/Src/dac/dac.h:
 ../Core/Src/pressure_sensor/pressure_sensor.h:

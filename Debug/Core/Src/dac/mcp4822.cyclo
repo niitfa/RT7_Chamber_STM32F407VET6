@@ -1,0 +1,7 @@
+../Core/Src/dac/mcp4822.c:20:6:mcp4822_init	1
+../Core/Src/dac/mcp4822.c:43:6:mcp4822_set_input_value	1
+../Core/Src/dac/mcp4822.c:48:6:mcp4822_shutdown	1
+../Core/Src/dac/mcp4822.c:56:13:mcp4822_transmit	2
+../Core/Src/dac/mcp4822.c:76:13:spi_select	2
+../Core/Src/dac/mcp4822.c:88:13:spi_deselect	2
+../Core/Src/dac/mcp4822.c:100:13:spi_hw_command	3

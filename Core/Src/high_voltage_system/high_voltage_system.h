@@ -10,6 +10,7 @@
 
 #include "dac.h"
 #include "adc.h"
+#include "mcp4822.h"
 
 #include "stm32f4xx_hal.h"
 
@@ -20,7 +21,8 @@
 
 typedef struct
 {
-	dac_t* inputDAC;
+	//dac_t* inputDAC;
+	mcp4822_t* inputDAC;
 	adc_t* outputADC;
 	GPIO_TypeDef* portSelectHV;
 	uint16_t pinSelectHV;
@@ -31,7 +33,8 @@ typedef struct
 } high_voltage_system_t;
 
 void hv_init(high_voltage_system_t* self,
-		dac_t* inputDAC,
+		//dac_t* inputDAC,
+		mcp4822_t* inputDAC,
 		adc_t* outputADC,
 		GPIO_TypeDef* portSelectHV,
 		uint16_t pinSelectHV,
