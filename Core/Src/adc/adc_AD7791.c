@@ -52,6 +52,9 @@ static void init(adc_t* self)
 
 static void update(adc_t* self, void* option)
 {
+	const uint8_t kDataSizeBytes = 3;
+	const uint8_t kBufferSizeBytes = 4;
+	uint8_t rxBytes [kBufferSizeBytes];
 	switch(self->data->state)
 	{
 	case AD7791_WAIT: // wait several cycles
@@ -103,9 +106,6 @@ static void update(adc_t* self, void* option)
 		}
 		break;
 	case AD7791_MEASURE:  // measure
-		const uint8_t kDataSizeBytes = 3;
-		const uint8_t kBufferSizeBytes = 4;
-		uint8_t rxBytes [kBufferSizeBytes];
 		memset(rxBytes, 0, kBufferSizeBytes);
 		spi_select(self);
 		//delay_us(1); // delay

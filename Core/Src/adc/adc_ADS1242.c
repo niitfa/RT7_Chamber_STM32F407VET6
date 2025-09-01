@@ -91,6 +91,10 @@ static void init(adc_t* self)
 
 static void update(adc_t* self, void* option)
 {
+	uint8_t MUX_word;
+	const uint8_t kDataSizeBytes = 3;
+	const uint8_t kBufferSizeBytes = 4;
+	uint8_t rxBytes [kBufferSizeBytes];
 	switch(self->data->state)
 	{
 		case ADS1242_WAIT:
@@ -109,7 +113,7 @@ static void update(adc_t* self, void* option)
 			self->data->state = ADS1242_SEL_CH;
 			break;
 		case ADS1242_SEL_CH:
-			uint8_t MUX_word = (self->data->chPositive << 4) | (self->data->chNegative << 0);
+			MUX_word = (self->data->chPositive << 4) | (self->data->chNegative << 0);
 			spi_select(self);
 			spi_hw_command(self, CMD_WREG | REG_MUX);
 			spi_hw_command(self, 0);
@@ -118,9 +122,6 @@ static void update(adc_t* self, void* option)
 			self->data->state = ADS1242_MEASURE;
 			break;
 		case ADS1242_MEASURE:
-			const uint8_t kDataSizeBytes = 3;
-			const uint8_t kBufferSizeBytes = 4;
-			uint8_t rxBytes [kBufferSizeBytes];
 			memset(rxBytes, 0, kBufferSizeBytes);
 
 			spi_select(self);

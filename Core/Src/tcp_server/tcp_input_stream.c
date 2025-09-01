@@ -58,11 +58,12 @@ int tcp_input_stream_routine(tcp_input_stream_t *self)
 {
 	// new state mashine
 	int received = -1;
+	int open = 0;
 	self->isConnected = 0;
 	switch(getSn_SR(self->initData.sn))
 	{
 	case SOCK_CLOSED:
-		int open = tcp_input_stream_open_socket(self);
+		open = tcp_input_stream_open_socket(self);
 		tcp_input_stream_reboot_ethernet(self, open);
 		break;
 	case SOCK_INIT:

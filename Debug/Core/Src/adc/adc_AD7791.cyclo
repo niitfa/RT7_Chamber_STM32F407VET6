@@ -1,9 +1,9 @@
 ../Core/Src/adc/adc_AD7791.c:48:13:init	1
 ../Core/Src/adc/adc_AD7791.c:53:13:update	12
-../Core/Src/adc/adc_AD7791.c:129:17:get_cnt	1
-../Core/Src/adc/adc_AD7791.c:134:15:get_vout	1
-../Core/Src/adc/adc_AD7791.c:141:7:adc_AD7791_create	2
-../Core/Src/adc/adc_AD7791.c:177:13:spi_select	1
-../Core/Src/adc/adc_AD7791.c:185:13:spi_deselect	1
-../Core/Src/adc/adc_AD7791.c:194:13:spi_hw_command	2
-../Core/Src/adc/adc_AD7791.c:201:13:delay_us	2
+../Core/Src/adc/adc_AD7791.c:130:17:get_cnt	1
+../Core/Src/adc/adc_AD7791.c:135:15:get_vout	1
+../Core/Src/adc/adc_AD7791.c:142:7:adc_AD7791_create	2
+../Core/Src/adc/adc_AD7791.c:178:13:spi_select	1
+../Core/Src/adc/adc_AD7791.c:186:13:spi_deselect	1
+../Core/Src/adc/adc_AD7791.c:195:13:spi_hw_command	2
+../Core/Src/adc/adc_AD7791.c:202:13:delay_us	2

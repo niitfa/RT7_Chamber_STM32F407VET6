@@ -69,6 +69,9 @@ static void init(adc_t* self)
 
 static void update(adc_t* self, void* option)
 {
+	const uint8_t kDataSizeBytes = 3;
+	const uint8_t kBufferSizeBytes = 4;
+	uint8_t rxBytes [kBufferSizeBytes];
 	switch(self->data->state)
 	{
 		case ADS1246_WAIT:
@@ -121,9 +124,6 @@ static void update(adc_t* self, void* option)
 
 			break;
 		case ADS1246_MEASURE:
-			const uint8_t kDataSizeBytes = 3;
-			const uint8_t kBufferSizeBytes = 4;
-			uint8_t rxBytes [kBufferSizeBytes];
 			memset(rxBytes, 0, kBufferSizeBytes);
 			spi_select(self);
 			spi_hw_command(self, CMD_RDATA); // can avoid sending command???
