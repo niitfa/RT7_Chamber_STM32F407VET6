@@ -58,7 +58,7 @@ void general_task_init(general_task_t* self)
 	HAL_Delay(100);
 	memset(self, 0, sizeof(*self));
 
-	self->loopPeriod_ms = 1;
+	self->loopPeriod_ms = 10;
 	self->freqIT = TIMER_FREQUENCY / (adctim->Init.Period + 1) / (adctim->Init.Prescaler + 1);
 	self->adcNoCnt = 0;
 
@@ -235,58 +235,20 @@ void general_task_init(general_task_t* self)
 
 void general_task_setup(general_task_t* self)
 {
-	//ILI9341_Init();
-
-	// init display
 	ssd1306_Init();
+
 	general_task_switch_screen(self, screen_1_instance());
+	screen_draw(self->currentScreen);
+
 	tcp_input_stream_enable_handler(&self->tcpInput);
-	/* HV ADC Start Calibration (offset measurement) */
-	//adc_monitor_start_measurement(&self->adcHVMonitor, self->freqIT * 2 / 3);
-
-	ssd1306_Init();
-	ssd1306_Fill(Black);
-	ssd1306_SetCursor(3, 3);
-	ssd1306_WriteString("Loading...", Font_7x10, White);
-	ssd1306_UpdateScreen();
-
-	// ip display
-	ssd1306_Fill(Black);
-
-	ssd1306_SetCursor(3, 20);
-	ssd1306_WriteString("ip:", Font_7x10, White);
-
-	ssd1306_SetCursor(25, 20);
-	ssd1306_WriteInt(self->ip[0], Font_7x10, White);
-	ssd1306_SetCursor(25 + 25*1, 20);
-	ssd1306_WriteInt(self->ip[1], Font_7x10, White);
-	ssd1306_SetCursor(25 + 25*2, 20);
-	ssd1306_WriteInt(self->ip[2], Font_7x10, White);
-	ssd1306_SetCursor(25 + 25*3, 20);
-	ssd1306_WriteInt(self->ip[3], Font_7x10, White);
-
-	ssd1306_SetCursor(3 , 35);
-	ssd1306_WriteString("out port:", Font_7x10, White);
-	ssd1306_SetCursor(70 , 35);
-	ssd1306_WriteInt(self->outputPort, Font_7x10, White);
-
-	ssd1306_SetCursor(3 , 50);
-	ssd1306_WriteString("in port: ", Font_7x10, White);
-	ssd1306_SetCursor(70, 50);
-	ssd1306_WriteInt(self->inputPort, Font_7x10, White);
-	ssd1306_UpdateScreen();
-
-
-	// start receiving
 	memset(self->uart_buff, 0, UART_BUFF_SIZE);
 	HAL_UART_Receive_IT(conf_uart, self->uart_buff, UART_BUFF_SIZE);
-
 	HAL_Delay(1000);
 }
 
 void general_task_loop(general_task_t* self)
 {
-	keyboard_routine(&self->keyboard);
+	//keyboard_routine(&self->keyboard);
 	if(!self->cycleCounter)
 	{
 		self->cycleCounter = self->cycleCounterMax;
@@ -305,15 +267,10 @@ void general_task_loop(general_task_t* self)
 
 		tcp_output_stream_set_message(&self->tcpOutput, tx_message_get(&self->txMessage), tx_message_size());
 		tcp_output_stream_routine(&self->tcpOutput);
-
-		// Input message
 		tcp_input_stream_routine(&self->tcpInput);
 
 		// Update screen
 		screen_update(self->currentScreen);
-
-		// debug!!!
-		//general_task_timer_interrupt(self);
 	}
 
 	self->cycleCounter--;

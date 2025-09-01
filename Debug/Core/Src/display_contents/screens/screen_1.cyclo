@@ -1,5 +1,5 @@
 ../Core/Src/display_contents/screens/screen_1.c:74:13:init_	1
 ../Core/Src/display_contents/screens/screen_1.c:84:13:update_	1
-../Core/Src/display_contents/screens/screen_1.c:155:13:draw_	1
-../Core/Src/display_contents/screens/screen_1.c:163:13:reg_keyboard_cbs_	2
-../Core/Src/display_contents/screens/screen_1.c:183:11:screen_1_instance	2
+../Core/Src/display_contents/screens/screen_1.c:135:13:draw_	1
+../Core/Src/display_contents/screens/screen_1.c:167:13:reg_keyboard_cbs_	2
+../Core/Src/display_contents/screens/screen_1.c:187:11:screen_1_instance	2

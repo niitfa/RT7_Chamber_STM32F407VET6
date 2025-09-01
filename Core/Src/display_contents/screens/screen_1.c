@@ -90,18 +90,6 @@ static void update_(screen_t* self)
 
 	self->data->adcDRAverValueCurr = adc_monitor_get_average_value(&task.adcDRMonitor);
 
-	/*if(self->data->adcDRValuePrev != self->data->adcDRValueCurr)
-	{
-	}
-
-	if(self->data->adcHVValuePrev != self->data->adcHVValueCurr)
-	{
-	}
-
-	if(self->data->adcPRValuePrev != self->data->adcPRValueCurr)
-	{
-	}*/
-
 	ssd1306_Fill(Black);
 
 	// HEAD
@@ -137,14 +125,6 @@ static void update_(screen_t* self)
 	ssd1306_UpdateScreen();
 
 
-
-
-	// Average
-	/*if(self->data->adcDRAverValuePrev != self->data->adcDRAverValueCurr)
-	{
-	} */
-
-
 	self->data->adcDRValuePrev = self->data->adcDRValueCurr;
 	self->data->adcHVValuePrev = self->data->adcHVValueCurr;
 	self->data->adcPRValuePrev = self->data->adcPRValueCurr;
@@ -154,9 +134,33 @@ static void update_(screen_t* self)
 
 static void draw_(screen_t* self)
 {
+
+
+
+	// ip display
 	ssd1306_Fill(Black);
-	ssd1306_SetCursor(3, 3);
-	ssd1306_WriteString("Loading...", *TEXT_FONT, White);
+
+	ssd1306_SetCursor(3, 20);
+	ssd1306_WriteString("ip:", Font_7x10, White);
+
+	ssd1306_SetCursor(25, 20);
+	ssd1306_WriteInt(task.ip[0], Font_7x10, White);
+	ssd1306_SetCursor(25 + 25*1, 20);
+	ssd1306_WriteInt(task.ip[1], Font_7x10, White);
+	ssd1306_SetCursor(25 + 25*2, 20);
+	ssd1306_WriteInt(task.ip[2], Font_7x10, White);
+	ssd1306_SetCursor(25 + 25*3, 20);
+	ssd1306_WriteInt(task.ip[3], Font_7x10, White);
+
+	ssd1306_SetCursor(3 , 35);
+	ssd1306_WriteString("out port:", Font_7x10, White);
+	ssd1306_SetCursor(70 , 35);
+	ssd1306_WriteInt(task.outputPort, Font_7x10, White);
+
+	ssd1306_SetCursor(3 , 50);
+	ssd1306_WriteString("in port: ", Font_7x10, White);
+	ssd1306_SetCursor(70, 50);
+	ssd1306_WriteInt(task.inputPort, Font_7x10, White);
 	ssd1306_UpdateScreen();
 }
 

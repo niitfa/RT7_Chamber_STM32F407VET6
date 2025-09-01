@@ -1,5 +1,5 @@
 ../Core/Src/display_contents/screens/screen_1.c:74:13:init_	16	static
 ../Core/Src/display_contents/screens/screen_1.c:84:13:update_	56	static
-../Core/Src/display_contents/screens/screen_1.c:155:13:draw_	24	static
-../Core/Src/display_contents/screens/screen_1.c:163:13:reg_keyboard_cbs_	16	static
-../Core/Src/display_contents/screens/screen_1.c:183:11:screen_1_instance	8	static
+../Core/Src/display_contents/screens/screen_1.c:135:13:draw_	24	static
+../Core/Src/display_contents/screens/screen_1.c:167:13:reg_keyboard_cbs_	16	static
+../Core/Src/display_contents/screens/screen_1.c:187:11:screen_1_instance	8	static

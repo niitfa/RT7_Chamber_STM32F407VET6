@@ -1,9 +1,9 @@
 ../Core/Src/adc/adc_ADS1242.c:87:13:init	1
 ../Core/Src/adc/adc_ADS1242.c:92:13:update	10
-../Core/Src/adc/adc_ADS1242.c:153:17:get_cnt	1
-../Core/Src/adc/adc_ADS1242.c:158:15:get_vout	1
-../Core/Src/adc/adc_ADS1242.c:166:7:adc_ADS1242_create	2
-../Core/Src/adc/adc_ADS1242.c:211:13:spi_select	1
-../Core/Src/adc/adc_ADS1242.c:219:13:spi_deselect	1
-../Core/Src/adc/adc_ADS1242.c:228:13:spi_hw_command	2
-../Core/Src/adc/adc_ADS1242.c:235:13:check_negative_24_to_32	2
+../Core/Src/adc/adc_ADS1242.c:154:17:get_cnt	1
+../Core/Src/adc/adc_ADS1242.c:159:15:get_vout	1
+../Core/Src/adc/adc_ADS1242.c:167:7:adc_ADS1242_create	2
+../Core/Src/adc/adc_ADS1242.c:212:13:spi_select	1
+../Core/Src/adc/adc_ADS1242.c:220:13:spi_deselect	1
+../Core/Src/adc/adc_ADS1242.c:229:13:spi_hw_command	2
+../Core/Src/adc/adc_ADS1242.c:236:13:check_negative_24_to_32	2
