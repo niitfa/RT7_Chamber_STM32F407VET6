@@ -149,7 +149,7 @@ void general_task_init(general_task_t* self)
 			&self->adcHV,
 			HV_INPUT_SELECT_GPIO_Port,
 			HV_INPUT_SELECT_Pin,
-			500. / 1024, // Vmax = 500, 922  = 1024 * 0.9 // 922
+			500. / 4096, // Vmax = 500, 922  = 1024 * 0.9 // 922
  			0.535 / 500, //1. / 233.645, // 43k/10M //0.002,
 			500
 			);
@@ -235,10 +235,10 @@ void general_task_init(general_task_t* self)
 
 void general_task_setup(general_task_t* self)
 {
-	ssd1306_Init();
+	//ssd1306_Init();
 
 	general_task_switch_screen(self, screen_1_instance());
-	screen_draw(self->currentScreen);
+	//screen_draw(self->currentScreen);
 
 	tcp_input_stream_enable_handler(&self->tcpInput);
 	memset(self->uart_buff, 0, UART_BUFF_SIZE);
@@ -270,7 +270,7 @@ void general_task_loop(general_task_t* self)
 		tcp_input_stream_routine(&self->tcpInput);
 
 		// Update screen
-		screen_update(self->currentScreen);
+		//screen_update(self->currentScreen);
 	}
 
 	self->cycleCounter--;
