@@ -15,7 +15,7 @@ static void spi_hw_command(mcp4822_t *self, uint8_t cmd);
 static void spi_select(mcp4822_t* self);
 static void spi_deselect(mcp4822_t* self);
 
-static void mcp4822_transmit(mcp4822_t* self, uint16_t digital_value, uint8_t shutdown, uint8_t gain, uint8_t channel);
+static void mcp4822_transmit(mcp4822_t* self, uint16_t digital_value, uint16_t shutdown, uint16_t gain, uint16_t channel);
 
 void mcp4822_init(
 		mcp4822_t* self,
@@ -40,7 +40,7 @@ void mcp4822_init(
 }
 
 
-void mcp4822_set_input_value(mcp4822_t* self, uint16_t digital_value, uint8_t channel)
+void mcp4822_set_input_value(mcp4822_t* self, uint16_t digital_value, uint16_t channel)
 {
 	mcp4822_transmit(self, digital_value, 1, 1, channel);
 }
@@ -53,7 +53,7 @@ void mcp4822_shutdown(mcp4822_t* self)
 	HAL_Delay(1);
 }
 
-static void mcp4822_transmit(mcp4822_t* self, uint16_t digital_value, uint8_t shutdown, uint8_t gain, uint8_t channel)
+static void mcp4822_transmit(mcp4822_t* self, uint16_t digital_value, uint16_t shutdown, uint16_t gain, uint16_t channel)
 {
 	digital_value = (digital_value < self->maxInputValue) ? digital_value : (self->maxInputValue - 1);
 	shutdown = shutdown ? 1 : 0;

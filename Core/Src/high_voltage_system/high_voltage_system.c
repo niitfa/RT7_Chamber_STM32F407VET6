@@ -53,7 +53,11 @@ int8_t hv_get_source_polarity(high_voltage_system_t* self)
 void hv_set_abs_output_voltage_V(high_voltage_system_t* self, double Vout)
 {
 	uint32_t digital = (uint32_t)round(fmin(Vout, self->VoutMax) / self->VoutStep_V);
-	//dac_set_input_value(self->inputDAC, digital);
+
+	// DEBUG!!
+	digital = (uint16_t)Vout; //
+
+
 	mcp4822_set_input_value(self->inputDAC, digital, 0);
 }
 

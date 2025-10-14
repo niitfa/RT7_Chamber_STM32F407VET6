@@ -163,7 +163,8 @@ void general_task_init(general_task_t* self)
 
 	HAL_Delay(5);
 	/* Ethernet */	// default values
-	uint8_t defIP[4] = {169, 254, 206, 12};
+	//uint8_t defIP[4] = {169, 254, 206, 12};
+	uint8_t defIP[4] = {192, 168, 1, 12};
 	uint16_t defInputPort = 22252;
 	uint16_t defOutputPort = 22251;
 
@@ -235,6 +236,10 @@ void general_task_init(general_task_t* self)
 
 void general_task_setup(general_task_t* self)
 {
+	// DEBUG
+	mcp4822_set_input_value(&self->dacInputHV, 400, 0);
+
+
 	//ssd1306_Init();
 
 	general_task_switch_screen(self, screen_1_instance());
@@ -272,6 +277,7 @@ void general_task_loop(general_task_t* self)
 		// Update screen
 		//screen_update(self->currentScreen);
 	}
+
 
 	self->cycleCounter--;
 	HAL_Delay(1);

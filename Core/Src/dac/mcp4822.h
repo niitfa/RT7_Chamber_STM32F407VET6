@@ -41,7 +41,7 @@ void mcp4822_init(
 		uint16_t pinLDAC
 		);
 
-void mcp4822_set_input_value(mcp4822_t* self, uint16_t digital_value, uint8_t channel);
+void mcp4822_set_input_value(mcp4822_t* self, uint16_t digital_value, uint16_t channel);
 void mcp4822_shutdown(mcp4822_t* self);
 
 #endif /* SRC_DAC_MCP4822_H_ */
