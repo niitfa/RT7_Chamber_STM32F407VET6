@@ -37,6 +37,8 @@ void mcp4822_init(
 	self->Vref = 2.048;
 	self->gain = 1;
 	self->channel = 0;
+
+	spi_deselect(self);
 }
 
 

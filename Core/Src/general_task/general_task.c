@@ -239,7 +239,6 @@ void general_task_setup(general_task_t* self)
 	// DEBUG
 	mcp4822_set_input_value(&self->dacInputHV, 400, 0);
 
-
 	//ssd1306_Init();
 
 	general_task_switch_screen(self, screen_1_instance());
