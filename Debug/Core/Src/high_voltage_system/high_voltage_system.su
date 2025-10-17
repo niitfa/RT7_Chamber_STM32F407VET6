@@ -1,7 +1,7 @@
 ../Core/Src/high_voltage_system/high_voltage_system.c:14:6:hv_init	48	static
-../Core/Src/high_voltage_system/high_voltage_system.c:38:6:hv_select_negative_source	16	static
-../Core/Src/high_voltage_system/high_voltage_system.c:43:6:hv_select_positive_source	16	static
-../Core/Src/high_voltage_system/high_voltage_system.c:48:8:hv_get_source_polarity	16	static
-../Core/Src/high_voltage_system/high_voltage_system.c:53:6:hv_set_abs_output_voltage_V	32	static
-../Core/Src/high_voltage_system/high_voltage_system.c:64:9:hv_get_output_voltage_V	16	static
-../Core/Src/high_voltage_system/high_voltage_system.c:69:6:hv_set_output_voltage_adc_offset	24	static
+../Core/Src/high_voltage_system/high_voltage_system.c:40:6:hv_select_negative_source	16	static
+../Core/Src/high_voltage_system/high_voltage_system.c:45:6:hv_select_positive_source	16	static
+../Core/Src/high_voltage_system/high_voltage_system.c:50:8:hv_get_source_polarity	16	static
+../Core/Src/high_voltage_system/high_voltage_system.c:55:6:hv_set_abs_output_voltage_V	64	static
+../Core/Src/high_voltage_system/high_voltage_system.c:78:9:hv_get_output_voltage_V	16	static
+../Core/Src/high_voltage_system/high_voltage_system.c:88:6:hv_set_output_voltage_adc_offset	24	static

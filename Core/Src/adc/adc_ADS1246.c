@@ -144,7 +144,7 @@ static void update(adc_t* self, void* option)
 	if(option) *(int*)option = self->data->state;
 }
 
-static uint32_t get_cnt(adc_t* self)
+static int32_t get_cnt(adc_t* self)
 {
 	return self->data->lastOutputValue;
 }

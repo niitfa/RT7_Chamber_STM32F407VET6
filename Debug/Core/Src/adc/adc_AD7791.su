@@ -1,6 +1,6 @@
 ../Core/Src/adc/adc_AD7791.c:48:13:init	16	static
 ../Core/Src/adc/adc_AD7791.c:53:13:update	56	dynamic
-../Core/Src/adc/adc_AD7791.c:129:17:get_cnt	16	static
+../Core/Src/adc/adc_AD7791.c:129:16:get_cnt	16	static
 ../Core/Src/adc/adc_AD7791.c:134:15:get_vout	24	static
 ../Core/Src/adc/adc_AD7791.c:141:7:adc_AD7791_create	48	static
 ../Core/Src/adc/adc_AD7791.c:177:13:spi_select	16	static

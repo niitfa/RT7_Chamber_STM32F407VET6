@@ -126,7 +126,7 @@ static void update(adc_t* self, void* option)
 	}
 }
 
-static uint32_t get_cnt(adc_t* self)
+static int32_t get_cnt(adc_t* self)
 {
 	return self->data->lastOutputValue;
 }

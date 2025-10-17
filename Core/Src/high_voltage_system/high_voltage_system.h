@@ -26,21 +26,26 @@ typedef struct
 	adc_t* outputADC;
 	GPIO_TypeDef* portSelectHV;
 	uint16_t pinSelectHV;
-	double VoutStep_V; // 1 V
-	double VoutOffsetADC_V;
-	double VoutGainADC;
-	double VoutMax;
+
+	//double VoutStep_V; // 1 V
+	//double VoutOffsetADC_V;
+	double HVOutputToADCInputGain;
+	double VoutOffsetADC;
+	//double VoutMax;
+
+	double dacOutputToHVInputGain;
+	double HVInputToHVOutputGain;
+
 } high_voltage_system_t;
 
 void hv_init(high_voltage_system_t* self,
-		//dac_t* inputDAC,
 		mcp4822_t* inputDAC,
 		adc_t* outputADC,
 		GPIO_TypeDef* portSelectHV,
 		uint16_t pinSelectHV,
-		double VoutStep_V,
-		double VoutGainADC,
-		double VoutMax
+		double HVOutputToADCInputGain,
+		double dacOutputToHVInputGain,
+		double HVInputToHVOutputGain
 		); // arguments list
 
 void hv_select_negative_source(high_voltage_system_t* self);

@@ -55,6 +55,16 @@ void mcp4822_shutdown(mcp4822_t* self)
 	HAL_Delay(1);
 }
 
+uint32_t mcp4822_get_max_input_value(mcp4822_t* self)
+{
+	return self->maxInputValue;
+}
+
+double mcp4822_get_reference_voltage(mcp4822_t* self)
+{
+	return self->Vref;
+}
+
 static void mcp4822_transmit(mcp4822_t* self, uint16_t digital_value, uint16_t shutdown, uint16_t gain, uint16_t channel)
 {
 	digital_value = (digital_value < self->maxInputValue) ? digital_value : (self->maxInputValue - 1);

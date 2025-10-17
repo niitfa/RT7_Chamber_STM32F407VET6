@@ -144,17 +144,22 @@ void general_task_init(general_task_t* self)
 
 
 	/* HV System */
+	double dacOutToHVInputGain = 2.5;
+	double HVInputToHVOutputGain = 100;
+	double HVOutputToADCInputGain = 1.1 / (500. * 2); // why " * 2???"
+
 	hv_init(&self->hv_system,
 			&self->dacInputHV,
 			&self->adcHV,
 			HV_INPUT_SELECT_GPIO_Port,
 			HV_INPUT_SELECT_Pin,
-			500. / 4096, // Vmax = 500, 922  = 1024 * 0.9 // 922
- 			0.535 / 500, //1. / 233.645, // 43k/10M //0.002,
-			500
+			HVOutputToADCInputGain,
+			dacOutToHVInputGain,
+			HVInputToHVOutputGain
 			);
 
-	hv_set_output_voltage_adc_offset(&self->hv_system, Vref_hv / 2);
+	//hv_set_output_voltage_adc_offset(&self->hv_system, Vref_hv / 2);
+	hv_set_output_voltage_adc_offset(&self->hv_system, 0);
 
 	/* Select range pin */
 	set_adc_dose_range_select_pin(SENSOR_RANGE_SELECT_GPIO_Port, SENSOR_RANGE_SELECT_Pin);
@@ -237,7 +242,8 @@ void general_task_init(general_task_t* self)
 void general_task_setup(general_task_t* self)
 {
 	// DEBUG
-	mcp4822_set_input_value(&self->dacInputHV, 400, 0);
+	//mcp4822_set_input_value(&self->dacInputHV, 2048, 0);
+
 
 	//ssd1306_Init();
 
@@ -261,7 +267,11 @@ void general_task_loop(general_task_t* self)
 		HAL_NVIC_DisableIRQ(USR_ADC_TIM_IRQn);
 		tx_message_set_adc_dr_cnt(&self->txMessage, (int32_t)(adc_get_cnt(&self->adcDoseRate))); // DONT uV, raw adc counts!!!!!
 		tx_message_set_adc_dr_average_cnt(&self->txMessage, adc_monitor_get_average_value(&self->adcDRMonitor)); // DONT uV, raw adc counts!!!!!
-		tx_message_set_hv_out_V(&self->txMessage, (int32_t)(hv_get_output_voltage_V(&self->hv_system))); // DONT mV, V!!!!
+
+		tx_message_set_hv_out_V(&self->txMessage, (int16_t)(hv_get_output_voltage_V(&self->hv_system))); // DONT mV, V!!!!
+		//uint32_t adc_hv_out = adc_get_cnt(&self->adcHV) >> 8;
+		//tx_message_set_hv_out_V(&self->txMessage, adc_hv_out);
+
 		tx_message_set_hv_polarity(&self->txMessage, hv_get_source_polarity(&self->hv_system)); // 1
 		tx_message_set_range(&self->txMessage, get_current_adc_dose_range()); // 1
 		tx_message_set_press_out_kPa(&self->txMessage, pressure_sensor_get_kPa(&self->pressureSensor));

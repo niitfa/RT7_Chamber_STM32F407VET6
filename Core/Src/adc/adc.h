@@ -22,7 +22,7 @@ struct adc_vtable
 {
 	void (*init)(adc_t* self);
 	void (*update)(adc_t* self, void* option);
-	uint32_t (*get_cnt) (adc_t* self);
+	int32_t (*get_cnt) (adc_t* self);
 	double (*get_vout) (adc_t* self);
 };
 

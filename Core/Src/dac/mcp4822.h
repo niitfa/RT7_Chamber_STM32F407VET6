@@ -43,5 +43,7 @@ void mcp4822_init(
 
 void mcp4822_set_input_value(mcp4822_t* self, uint16_t digital_value, uint16_t channel);
 void mcp4822_shutdown(mcp4822_t* self);
+uint32_t mcp4822_get_max_input_value(mcp4822_t* self);
+double mcp4822_get_reference_voltage(mcp4822_t* self);
 
 #endif /* SRC_DAC_MCP4822_H_ */
