@@ -1,6 +1,6 @@
 ../Core/Src/adc/adc_ADS1242.c:87:13:init	1
 ../Core/Src/adc/adc_ADS1242.c:92:13:update	10
-../Core/Src/adc/adc_ADS1242.c:154:17:get_cnt	1
+../Core/Src/adc/adc_ADS1242.c:154:16:get_cnt	1
 ../Core/Src/adc/adc_ADS1242.c:159:15:get_vout	1
 ../Core/Src/adc/adc_ADS1242.c:167:7:adc_ADS1242_create	2
 ../Core/Src/adc/adc_ADS1242.c:212:13:spi_select	1

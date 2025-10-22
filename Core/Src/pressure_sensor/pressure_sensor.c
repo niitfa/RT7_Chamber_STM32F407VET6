@@ -5,6 +5,7 @@
  *      Author: Kirill
  */
 #include <string.h>
+#include <math.h>
 
 #include "pressure_sensor.h"
 
@@ -19,7 +20,7 @@ int pressure_sensor_init(pressure_sensor_t* self, int pressureOffsetkPa, double 
 
 int pressure_sensor_get_kPa(pressure_sensor_t* self)
 {
-	return (int)(adc_get_vout(self->adc) * self->kPaPerV) - self->pressureOffsetkPa;
+	return (int)round((adc_get_vout(self->adc) * self->kPaPerV) + self->pressureOffsetkPa);
 }
 
 

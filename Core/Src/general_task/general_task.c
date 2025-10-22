@@ -133,15 +133,13 @@ void general_task_init(general_task_t* self)
 	adc_monitor_init(&self->adcPRMonitor, &self->adcPressure, USR_ADC_TIM_IRQn);
 
 	/* Pressure sensor */
-	int pressureOffsetkPa = 100; // kPa
-	float kPaPerV = 20. * 1e+2 / 2.5;
+	int pressureOffsetkPa = 1 * 100; // kPa
+	float kPaPerV = (20. - 1.) * 100 / 2.5;
 
 	pressure_sensor_init(&self->pressureSensor, pressureOffsetkPa, kPaPerV, &self->adcPressure);
 
 	/* DAC HV Input */
 	mcp4822_init(&self->dacInputHV, &hspi2, DAC_SPI_CS_GPIO_Port,DAC_SPI_CS_Pin, NULL, 0);
-
-
 
 	/* HV System */
 	double dacOutToHVInputGain = 2.5;
@@ -241,15 +239,7 @@ void general_task_init(general_task_t* self)
 
 void general_task_setup(general_task_t* self)
 {
-	// DEBUG
-	//mcp4822_set_input_value(&self->dacInputHV, 2048, 0);
-
-
-	//ssd1306_Init();
-
 	general_task_switch_screen(self, screen_1_instance());
-	//screen_draw(self->currentScreen);
-
 	tcp_input_stream_enable_handler(&self->tcpInput);
 	memset(self->uart_buff, 0, UART_BUFF_SIZE);
 	HAL_UART_Receive_IT(conf_uart, self->uart_buff, UART_BUFF_SIZE);
@@ -298,11 +288,6 @@ void general_task_timer_interrupt(general_task_t* self)
 	switch(self->adcNoCnt)
 	{
 	case 0:
-		/* Dose ADC*/
-		//adc_update(&self->adcDoseRate, NULL);
-		//adc_monitor_update(&self->adcDRMonitor);
-		//self->adcNoCnt++;
-
 		adc_update(&self->adcDoseRate, (void*)&nextStateCode);
 		if(nextStateCode == ADS1246_MEASURE) // current state is ADS1246_CHECK_xDRDY
 		{
@@ -316,10 +301,6 @@ void general_task_timer_interrupt(general_task_t* self)
 		break;
 	case 1:
 		/* HV ADC*/
-		//adc_update(&self->adcHV, NULL);
-		//adc_monitor_update(&self->adcHVMonitor);
-		//self->adcNoCnt++;
-
 		adc_update(&self->adcHV, (void*)&nextStateCode);
 		if(nextStateCode == ADS1246_MEASURE) // current state is ADS1246_CHECK_xDRDY
 		{
@@ -333,10 +314,6 @@ void general_task_timer_interrupt(general_task_t* self)
 		break;
 	case 2:
 		/* Pressure ADC */
-		//adc_update(&self->adcPressure, NULL);
-		//adc_monitor_update(&self->adcPRMonitor);
-		//self->adcNoCnt = 0;
-
 		adc_update(&self->adcPressure, (void*)&nextStateCode);
 		if(nextStateCode == ADS1246_MEASURE) // current state is ADS1246_CHECK_xDRDY
 		{
@@ -346,7 +323,6 @@ void general_task_timer_interrupt(general_task_t* self)
 		{
 			self->adcNoCnt = 0;
 		}
-
 		break;
 	}
 }
