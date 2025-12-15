@@ -51,8 +51,6 @@ struct adc_data_t
 	int32_t lastOutputValue;
 	int32_t maxOutputValue;
 
-	int32_t frameNo;
-
 	//uint8_t FR_word;
 	uint8_t SYS0_conf;
 
@@ -191,7 +189,6 @@ adc_t adc_ADS1246_create(
 		pdata->lastOutputValue = 0;
 		pdata->bitResolution = 24;
 		pdata->maxOutputValue = (uint32_t)pow(2, pdata->bitResolution);
-		pdata->frameNo = 0;
 		pdata->SYS0_conf = SYS0_conf;
 		pdata->waitCycles = waitCycles;
 		pdata->setupWaitCyclesMax = 5;
