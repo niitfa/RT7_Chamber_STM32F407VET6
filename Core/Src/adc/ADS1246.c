@@ -92,13 +92,29 @@ void ADS1246_switch_to_temperature_mode(ADS1246_t* self)
 	self->newMeasureState = ADS1246_MEASURE_TEMP;
 }
 
-ADS1246_t ADS1246_get_measure_mode(ADS1246_t* self)
+ADS1246_state_t ADS1246_get_measure_mode(ADS1246_t* self)
 {
 	return self->oldMeasureState;
 }
 
+void ADS1246_spi_setup(ADS1246_t* self)
+{
+	switch(self->oldMeasureState) {
+	case ADS1246_MEASURE_AIN:
+		break;
+	case ADS1246_MEASURE_TEMP:
+		break;
+	}
+
+}
+
+void ADS1246_spi_update(ADS1246_t* self)
+{
+
+}
+
 // private
-static void ADS1246_spi_command(ADS1246_t* self, uint8_t cmd)
+static void spi_command(ADS1246_t* self, uint8_t cmd)
 {
 	if(self->hspi)
 	{
@@ -107,7 +123,7 @@ static void ADS1246_spi_command(ADS1246_t* self, uint8_t cmd)
 	}
 }
 
-static void ADS1246_spi_select(ADS1246_t* self)
+static void spi_select(ADS1246_t* self)
 {
 	if(self->portCS)
 	{
@@ -115,7 +131,7 @@ static void ADS1246_spi_select(ADS1246_t* self)
 	}
 }
 
-static void ADS1246_spi_deselect(ADS1246_t* self)
+static void spi_deselect(ADS1246_t* self)
 {
 	if(self->portCS)
 	{

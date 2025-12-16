@@ -8,6 +8,9 @@
 #ifndef SRC_ADC_ADS1246_H_
 #define SRC_ADC_ADS1246_H_
 
+#include <stdint.h>
+#include "stm32f4xx_hal.h"
+
 typedef enum
 {
 	ADS1246_EMPTY,
@@ -55,8 +58,8 @@ void ADS1246_set_reset_pin(ADS1246_t* self, GPIO_TypeDef* port, uint16_t pin);
 // operation mode
 void ADS1246_switch_to_analog_input_mode(ADS1246_t* self);
 void ADS1246_switch_to_temperature_mode(ADS1246_t* self);
-ADS1246_t ADS1246_get_measure_mode(ADS1246_t* self);
-void ADS1246_spi_setup(ADS1246_t* self); // in xdrdy interrupt
+ADS1246_state_t ADS1246_get_measure_mode(ADS1246_t* self);
+void ADS1246_spi_setup(ADS1246_t* self);
 void ADS1246_spi_update(ADS1246_t* self); // in xdrdy interrupt
 
 // output

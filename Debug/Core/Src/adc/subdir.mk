@@ -5,6 +5,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/adc/ADS1246.c \
 ../Core/Src/adc/adc.c \
 ../Core/Src/adc/adc_AD7791.c \
 ../Core/Src/adc/adc_ADS1242.c \
@@ -15,6 +16,7 @@ C_SRCS += \
 ../Core/Src/adc/range_select.c 
 
 OBJS += \
+./Core/Src/adc/ADS1246.o \
 ./Core/Src/adc/adc.o \
 ./Core/Src/adc/adc_AD7791.o \
 ./Core/Src/adc/adc_ADS1242.o \
@@ -25,6 +27,7 @@ OBJS += \
 ./Core/Src/adc/range_select.o 
 
 C_DEPS += \
+./Core/Src/adc/ADS1246.d \
 ./Core/Src/adc/adc.d \
 ./Core/Src/adc/adc_AD7791.d \
 ./Core/Src/adc/adc_ADS1242.d \
@@ -42,7 +45,7 @@ Core/Src/adc/%.o Core/Src/adc/%.su Core/Src/adc/%.cyclo: ../Core/Src/adc/%.c Cor
 clean: clean-Core-2f-Src-2f-adc
 
 clean-Core-2f-Src-2f-adc:
-	-$(RM) ./Core/Src/adc/adc.cyclo ./Core/Src/adc/adc.d ./Core/Src/adc/adc.o ./Core/Src/adc/adc.su ./Core/Src/adc/adc_AD7791.cyclo ./Core/Src/adc/adc_AD7791.d ./Core/Src/adc/adc_AD7791.o ./Core/Src/adc/adc_AD7791.su ./Core/Src/adc/adc_ADS1242.cyclo ./Core/Src/adc/adc_ADS1242.d ./Core/Src/adc/adc_ADS1242.o ./Core/Src/adc/adc_ADS1242.su ./Core/Src/adc/adc_ADS1246.cyclo ./Core/Src/adc/adc_ADS1246.d ./Core/Src/adc/adc_ADS1246.o ./Core/Src/adc/adc_ADS1246.su ./Core/Src/adc/adc_emulator.cyclo ./Core/Src/adc/adc_emulator.d ./Core/Src/adc/adc_emulator.o ./Core/Src/adc/adc_emulator.su ./Core/Src/adc/adc_monitor.cyclo ./Core/Src/adc/adc_monitor.d ./Core/Src/adc/adc_monitor.o ./Core/Src/adc/adc_monitor.su ./Core/Src/adc/counter.cyclo ./Core/Src/adc/counter.d ./Core/Src/adc/counter.o ./Core/Src/adc/counter.su ./Core/Src/adc/range_select.cyclo ./Core/Src/adc/range_select.d ./Core/Src/adc/range_select.o ./Core/Src/adc/range_select.su
+	-$(RM) ./Core/Src/adc/ADS1246.cyclo ./Core/Src/adc/ADS1246.d ./Core/Src/adc/ADS1246.o ./Core/Src/adc/ADS1246.su ./Core/Src/adc/adc.cyclo ./Core/Src/adc/adc.d ./Core/Src/adc/adc.o ./Core/Src/adc/adc.su ./Core/Src/adc/adc_AD7791.cyclo ./Core/Src/adc/adc_AD7791.d ./Core/Src/adc/adc_AD7791.o ./Core/Src/adc/adc_AD7791.su ./Core/Src/adc/adc_ADS1242.cyclo ./Core/Src/adc/adc_ADS1242.d ./Core/Src/adc/adc_ADS1242.o ./Core/Src/adc/adc_ADS1242.su ./Core/Src/adc/adc_ADS1246.cyclo ./Core/Src/adc/adc_ADS1246.d ./Core/Src/adc/adc_ADS1246.o ./Core/Src/adc/adc_ADS1246.su ./Core/Src/adc/adc_emulator.cyclo ./Core/Src/adc/adc_emulator.d ./Core/Src/adc/adc_emulator.o ./Core/Src/adc/adc_emulator.su ./Core/Src/adc/adc_monitor.cyclo ./Core/Src/adc/adc_monitor.d ./Core/Src/adc/adc_monitor.o ./Core/Src/adc/adc_monitor.su ./Core/Src/adc/counter.cyclo ./Core/Src/adc/counter.d ./Core/Src/adc/counter.o ./Core/Src/adc/counter.su ./Core/Src/adc/range_select.cyclo ./Core/Src/adc/range_select.d ./Core/Src/adc/range_select.o ./Core/Src/adc/range_select.su
 
 .PHONY: clean-Core-2f-Src-2f-adc
 

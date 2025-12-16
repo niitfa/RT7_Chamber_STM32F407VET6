@@ -1,3 +1,4 @@
+"./Core/Src/adc/ADS1246.o"
 "./Core/Src/adc/adc.o"
 "./Core/Src/adc/adc_AD7791.o"
 "./Core/Src/adc/adc_ADS1242.o"

@@ -24,6 +24,7 @@ static uint8_t CMD_WREG 	= 0x40;
 //static uint8_t CMD_SELFOCAL = 0x62;
 
 static uint8_t REG_SYS0 = 0x03;
+static uint8_t REG_MUX = 0x02;
 
 #define ADC_ADS1246_SPI_TIMEOUT 10
 
@@ -102,6 +103,15 @@ static void update(adc_t* self, void* option)
 			spi_hw_command(self, CMD_WREG | REG_SYS0);
 			spi_hw_command(self, 0); // 1 byte
 			spi_hw_command(self, self->data->SYS0_conf);
+			spi_deselect(self);
+			self->data->state = ADS1246_SETUP_MUX;
+			break;
+		case ADS1246_SETUP_MUX:
+			// setup mux
+			spi_select(self);
+			spi_hw_command(self, CMD_WREG | REG_MUX);
+			spi_hw_command(self, 0); // 1 byte
+			spi_hw_command(self, 0b10000000); // 0bxxxxxx11 - temp, 0bxxxxxx00 - ain
 			spi_deselect(self);
 			self->data->state = ADS1246_CHECK_xDRDY;
 			break;
