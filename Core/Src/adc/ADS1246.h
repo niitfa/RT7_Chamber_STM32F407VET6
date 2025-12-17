@@ -32,7 +32,7 @@ typedef struct
 	uint16_t pinRESET;
 	uint8_t bitResolution;
 	double Vref;
-	uint8_t SYS0_conf;
+	uint8_t sys0;
 
 	// states
 	ADS1246_state_t oldMeasureState;
@@ -54,6 +54,7 @@ void ADS1246_set_cs_pin(ADS1246_t* self, GPIO_TypeDef* port, uint16_t pin);
 void ADS1246_set_xdrdy_pin(ADS1246_t* self, GPIO_TypeDef* port, uint16_t pin);
 void ADS1246_set_start_pin(ADS1246_t* self, GPIO_TypeDef* port, uint16_t pin);
 void ADS1246_set_reset_pin(ADS1246_t* self, GPIO_TypeDef* port, uint16_t pin);
+void ADS1246_set_sys0_reg(ADS1246_t* self, uint8_t sys0);
 
 // operation mode
 void ADS1246_switch_to_analog_input_mode(ADS1246_t* self);

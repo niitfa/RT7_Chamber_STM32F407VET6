@@ -95,17 +95,17 @@ C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.external
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-sf_floor.o)
                               C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-kf_rem_pio2.o) (floorf)
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldf3.o)
-                              ./Core/Src/adc/adc_AD7791.o (__aeabi_dmul)
+                              ./Core/Src/adc/ADS1246.o (__aeabi_dmul)
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
-                              ./Core/Src/adc/adc_monitor.o (__aeabi_dsub)
+                              ./Core/Src/adc/ADS1246.o (__aeabi_dsub)
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
-                              ./Core/Src/adc/adc_AD7791.o (__aeabi_ddiv)
+                              ./Core/Src/adc/ADS1246.o (__aeabi_ddiv)
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_cmpdf2.o)
                               C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-w_pow.o) (__aeabi_dcmpeq)
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_unorddf2.o)
                               C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-w_pow.o) (__aeabi_dcmpun)
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixdfsi.o)
-                              ./Core/Src/adc/adc_monitor.o (__aeabi_d2iz)
+                              ./Core/Src/adc/ADS1246.o (__aeabi_d2iz)
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixunsdfsi.o)
                               ./Core/Src/adc/ADS1246.o (__aeabi_d2uiz)
 C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
@@ -202,31 +202,24 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 ./Core/Src/adc/ADS1246.o
  .bss.CMD_WAKEUP
                 0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
- .data.CMD_SLEEP
-                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
- .data.CMD_SYNC
-                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
- .data.CMD_RESET
-                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
  .data.CMD_NOP  0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
  .data.CMD_RDATA
                 0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
- .data.CMD_RDATAC
-                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
- .data.CMD_RREG
-                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
  .data.CMD_WREG
-                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
- .data.CMD_SYSOCAL
-                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
- .data.CMD_SYSGCAL
-                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
- .data.CMD_SELFOCAL
                 0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
  .data.REG_SYS0
                 0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
+ .data.REG_MUX  0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
+ .data.MUX_CLKSTAT_EXT
+                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
+ .bss.MUX_MUXCAL_DEFAULT
+                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
+ .data.MUX_MUXCAL_TEMP
+                0x0000000000000000        0x1 ./Core/Src/adc/ADS1246.o
  .rodata.spiTimeout
                 0x0000000000000000        0x2 ./Core/Src/adc/ADS1246.o
+ .text.delay_us
+                0x0000000000000000       0x40 ./Core/Src/adc/ADS1246.o
  .text.ADS1246_init
                 0x0000000000000000       0x90 ./Core/Src/adc/ADS1246.o
  .text.ADS1246_set_reference_voltage
@@ -241,6 +234,8 @@ Discarded input sections
                 0x0000000000000000       0x26 ./Core/Src/adc/ADS1246.o
  .text.ADS1246_set_reset_pin
                 0x0000000000000000       0x26 ./Core/Src/adc/ADS1246.o
+ .text.ADS1246_set_sys0_reg
+                0x0000000000000000       0x20 ./Core/Src/adc/ADS1246.o
  .text.ADS1246_switch_to_analog_input_mode
                 0x0000000000000000       0x1c ./Core/Src/adc/ADS1246.o
  .text.ADS1246_switch_to_temperature_mode
@@ -248,29 +243,39 @@ Discarded input sections
  .text.ADS1246_get_measure_mode
                 0x0000000000000000       0x1a ./Core/Src/adc/ADS1246.o
  .text.ADS1246_spi_setup
-                0x0000000000000000       0x26 ./Core/Src/adc/ADS1246.o
+                0x0000000000000000       0x3a ./Core/Src/adc/ADS1246.o
  .text.ADS1246_spi_update
-                0x0000000000000000       0x14 ./Core/Src/adc/ADS1246.o
- .text.ADS1246_spi_command
+                0x0000000000000000       0x6c ./Core/Src/adc/ADS1246.o
+ .text.spi_command
                 0x0000000000000000       0x3c ./Core/Src/adc/ADS1246.o
- .text.ADS1246_spi_select
+ .text.spi_select
                 0x0000000000000000       0x28 ./Core/Src/adc/ADS1246.o
- .text.ADS1246_spi_deselect
+ .text.spi_deselect
                 0x0000000000000000       0x28 ./Core/Src/adc/ADS1246.o
- .text.ADS1246_check_negative_24_to_32
+ .text.check_negative_24_to_32
                 0x0000000000000000       0x2e ./Core/Src/adc/ADS1246.o
- .text.ADS1246_raw_temperature_to_celcius
-                0x0000000000000000       0x18 ./Core/Src/adc/ADS1246.o
+ .text.ADS1246_reset
+                0x0000000000000000       0x82 ./Core/Src/adc/ADS1246.o
+ .text.ADS1246_spi_read
+                0x0000000000000000       0xe8 ./Core/Src/adc/ADS1246.o
+ .text.ADS1246_spi_wake_up
+                0x0000000000000000       0x2c ./Core/Src/adc/ADS1246.o
+ .text.ADS1246_spi_setup_sys0_reg
+                0x0000000000000000       0x50 ./Core/Src/adc/ADS1246.o
  .text.ADS1246_spi_setup_temperature_mode
-                0x0000000000000000       0x14 ./Core/Src/adc/ADS1246.o
+                0x0000000000000000       0x5c ./Core/Src/adc/ADS1246.o
  .text.ADS1246_spi_setup_analog_input_mode
-                0x0000000000000000       0x14 ./Core/Src/adc/ADS1246.o
- .debug_info    0x0000000000000000      0xcc4 ./Core/Src/adc/ADS1246.o
- .debug_abbrev  0x0000000000000000      0x25c ./Core/Src/adc/ADS1246.o
- .debug_aranges
+                0x0000000000000000       0x58 ./Core/Src/adc/ADS1246.o
+ .text.ADS1246_spi_setup_new_mode
+                0x0000000000000000       0x4c ./Core/Src/adc/ADS1246.o
+ .text.ADS1246_raw_temperature_to_celcius
                 0x0000000000000000       0xb0 ./Core/Src/adc/ADS1246.o
+ .debug_info    0x0000000000000000      0xe2a ./Core/Src/adc/ADS1246.o
+ .debug_abbrev  0x0000000000000000      0x2e4 ./Core/Src/adc/ADS1246.o
+ .debug_aranges
+                0x0000000000000000       0xe8 ./Core/Src/adc/ADS1246.o
  .debug_rnglists
-                0x0000000000000000       0x80 ./Core/Src/adc/ADS1246.o
+                0x0000000000000000       0xad ./Core/Src/adc/ADS1246.o
  .debug_macro   0x0000000000000000      0x305 ./Core/Src/adc/ADS1246.o
  .debug_macro   0x0000000000000000      0xaa8 ./Core/Src/adc/ADS1246.o
  .debug_macro   0x0000000000000000       0x22 ./Core/Src/adc/ADS1246.o
@@ -332,10 +337,10 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x10 ./Core/Src/adc/ADS1246.o
  .debug_macro   0x0000000000000000       0x20 ./Core/Src/adc/ADS1246.o
  .debug_macro   0x0000000000000000      0x19b ./Core/Src/adc/ADS1246.o
- .debug_line    0x0000000000000000      0xb13 ./Core/Src/adc/ADS1246.o
- .debug_str     0x0000000000000000    0xcad88 ./Core/Src/adc/ADS1246.o
+ .debug_line    0x0000000000000000      0xcbb ./Core/Src/adc/ADS1246.o
+ .debug_str     0x0000000000000000    0xcae24 ./Core/Src/adc/ADS1246.o
  .comment       0x0000000000000000       0x44 ./Core/Src/adc/ADS1246.o
- .debug_frame   0x0000000000000000      0x2f8 ./Core/Src/adc/ADS1246.o
+ .debug_frame   0x0000000000000000      0x3f8 ./Core/Src/adc/ADS1246.o
  .ARM.attributes
                 0x0000000000000000       0x34 ./Core/Src/adc/ADS1246.o
  .group         0x0000000000000000        0xc ./Core/Src/adc/adc.o
