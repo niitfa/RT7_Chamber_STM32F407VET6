@@ -80,6 +80,14 @@ int tcp_output_stream_routine(tcp_output_stream_t *self)
 			self->isConnected = 1;
 		}
 		break;
+
+		// new
+	case SOCK_CLOSE_WAIT:
+		tcp_output_stream_close_socket(self);
+		break;
+	case SOCK_SYNSENT:
+		tcp_output_stream_close_socket(self);
+		break;
 	}
 	return 0;
 }
@@ -108,6 +116,7 @@ static int tcp_output_stream_send(tcp_output_stream_t *self)
 
 int tcp_output_stream_close_socket(tcp_output_stream_t *self)
 {
+	disconnect(self->initData.sn);
 	close(self->initData.sn);
 	return 0;
 }

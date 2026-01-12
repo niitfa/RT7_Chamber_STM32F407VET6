@@ -80,6 +80,13 @@ int tcp_input_stream_routine(tcp_input_stream_t *self)
 			self->isConnected = 1;
 		}
 		break;
+	// new!
+	case SOCK_CLOSE_WAIT:
+		tcp_input_stream_close_socket(self);
+		break;
+	case SOCK_SYNRECV:
+		tcp_input_stream_close_socket(self);
+		break;
 	}
 	return 0;
 }

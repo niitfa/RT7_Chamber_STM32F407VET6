@@ -2,9 +2,9 @@
 ../Core/Src/tcp_server/tcp_output_stream.c:31:5:tcp_output_stream_deinit	16	static
 ../Core/Src/tcp_server/tcp_output_stream.c:36:5:tcp_output_stream_set_message	24	static
 ../Core/Src/tcp_server/tcp_output_stream.c:52:5:tcp_output_stream_routine	24	static
-../Core/Src/tcp_server/tcp_output_stream.c:87:9:tcp_output_stream_is_connected	16	static
-../Core/Src/tcp_server/tcp_output_stream.c:92:12:tcp_output_stream_open_socket	16	static
-../Core/Src/tcp_server/tcp_output_stream.c:98:12:tcp_output_stream_listen_socket	16	static
-../Core/Src/tcp_server/tcp_output_stream.c:104:12:tcp_output_stream_send	16	static
-../Core/Src/tcp_server/tcp_output_stream.c:109:5:tcp_output_stream_close_socket	16	static
-../Core/Src/tcp_server/tcp_output_stream.c:115:12:tcp_output_stream_reboot_socket	16	static
+../Core/Src/tcp_server/tcp_output_stream.c:95:9:tcp_output_stream_is_connected	16	static
+../Core/Src/tcp_server/tcp_output_stream.c:100:12:tcp_output_stream_open_socket	16	static
+../Core/Src/tcp_server/tcp_output_stream.c:106:12:tcp_output_stream_listen_socket	16	static
+../Core/Src/tcp_server/tcp_output_stream.c:112:12:tcp_output_stream_send	16	static
+../Core/Src/tcp_server/tcp_output_stream.c:117:5:tcp_output_stream_close_socket	16	static
+../Core/Src/tcp_server/tcp_output_stream.c:124:12:tcp_output_stream_reboot_socket	16	static
